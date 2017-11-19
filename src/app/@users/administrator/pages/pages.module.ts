@@ -20,6 +20,22 @@ import { TasksHistoryPage } from './tasks-history';
     MyTasksPage,
     SettingsPage,
     TasksHistoryPage,
+  ],
+  entryComponents: [
+    ActiveTasksPage,
+    AddTaskPage,
+    HomePage,
+    MyTasksPage,
+    SettingsPage,
+    TasksHistoryPage,
+  ],
+  exports: [
+    ActiveTasksPage,
+    AddTaskPage,
+    HomePage,
+    MyTasksPage,
+    SettingsPage,
+    TasksHistoryPage,
   ]
 })
 export class PagesModule { }

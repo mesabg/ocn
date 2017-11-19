@@ -1,19 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
-@IonicPage({
-	name: 'app-administrator-add-task-page',
-	segment: 'add-task'
-})
 @Component({
-  selector: 'app-administrator-add-task-page',
+  selector: 'app-add-task-page-component',
   templateUrl: './add-task.page.html',
   encapsulation: ViewEncapsulation.None
 })
 export class AddTaskPage implements OnInit {
-  constructor(public navCtrl:NavController, public navParams:NavParams) { }
+  constructor() { }
 	ngOnInit() { }
-	ionViewDidLoad(){ }
-	ionViewWillLeave(){ }
 }

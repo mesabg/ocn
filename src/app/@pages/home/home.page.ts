@@ -1,19 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
-@IonicPage({
-	name: 'app-administrator-home-page',
-	segment: 'home'
-})
 @Component({
-  selector: 'app-administrator-home-page',
+  selector: 'app-home-page-component',
   templateUrl: './home.page.html',
   encapsulation: ViewEncapsulation.None
 })
 export class HomePage implements OnInit {
-  constructor(public navCtrl:NavController, public navParams:NavParams) { }
+  constructor() { }
 	ngOnInit() { }
-	ionViewDidLoad(){ }
-	ionViewWillLeave(){ }
 }

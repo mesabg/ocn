@@ -1,2 +1,2 @@
 //-- Export Module
-export { PagesModule } from './pages.module';
+export { PagesModule } from './@pages.module';
