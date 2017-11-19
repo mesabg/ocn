@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { 
 	Routes, 
 	RouterModule } from '@angular/router';
+import { PreloadAllModules } from '@angular/router';
 
 /**
  * Modules imports
@@ -28,7 +29,8 @@ import {
 /**
  * Local imports
  */
-import { Layout } from './layout';
+import { AppPreloader } from './app.preloader';
+import { AdministratorModule } from './@users/administrator/administrator.module';
 
 const routes: Routes = [{
 	path: '',
@@ -38,16 +40,25 @@ const routes: Routes = [{
 		{ path: 'register', component: RegisterPage },
 
 		//-- Lazy load modules
-		{ path: 'general', loadChildren: './@users/general/general.module#GeneralModule', canActivate:[GeneralGuard] },
-		{ path: 'administrator', loadChildren: './@users/administrator/administrator.module#AdministratorModule', canActivate:[AdministratorGuard] }
+		{ 
+			path: 'general', 
+			loadChildren: './@users/general/general.module#GeneralModule', 
+			canActivate:[GeneralGuard] 
+		},
+		{ 
+			path: 'administrator', 
+			loadChildren: () => AdministratorModule/*'src/app/@users/administrator/administrator.module#AdministratorModule'*/, 
+			canActivate:[AdministratorGuard]
+		}
 	]
 }];
 
 @NgModule({
 	imports: [
 		GeneralPagesModule,
-		RouterModule.forRoot(routes, {useHash: true}) 
+		RouterModule.forRoot(routes, {useHash: true, preloadingStrategy: PreloadAllModules}) 
 	],
-	exports: [ RouterModule ]
+	exports: [ RouterModule ],
+	providers: [ AppPreloader ]
 })
 export class RoutingModule { }

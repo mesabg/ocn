@@ -116,10 +116,10 @@ function CargarHome(){
 };
 
 function Autentificar(){
-    var user=$("#user-login").val();
-    var password=$("#user-password").val();
-    console.log(user);
-    console.log(password);
+    //var user=$("#user-login").val();
+    //var password=$("#user-password").val();
+    //console.log(user);
+    //console.log(password);
     /*$.ajax({
         type: "POST",
         url: servidor + 'api/v1/authenticate',
@@ -155,7 +155,7 @@ function Autentificar(){
 
         }
     });*/
-    const fakeLogin = function()
+    /*const fakeLogin = function()
     {
         //var responseJson = JSON.parse(response);
 
@@ -175,7 +175,7 @@ function Autentificar(){
 
     }
 
-    fakeLogin();
+    fakeLogin();*/
 
 }
 

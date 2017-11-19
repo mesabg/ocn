@@ -117,23 +117,27 @@ export class AuthenticationService {
     }
 
     public redirect():void{
-        let token = sessionStorage.getItem('token');
-
+        
         this.isLoggedIn()
         .then((logged) => {
+            let token:string;
             if (logged){
-                let decodeToken = this.jwt.decodeToken(token);
-                switch (decodeToken.type) {
-                    case 'general':
-                        this.cta.generalView();
-                        break;
-                    case 'administrator':
-                        this.cta.administratorView();
-                        break;
-                    default:
-                        this.cta.login();
-                        break;
-                }
+                this.storage.get('token')
+                .then((token) => {
+                    let decodeToken = this.jwt.decodeToken(token);
+                    switch (decodeToken.type) {
+                        case 'general':
+                            this.cta.generalView();
+                            break;
+                        case 'administrator':
+                            this.cta.administratorView();
+                            break;
+                        default:
+                            this.cta.login();
+                            break;
+                    }
+                })
+                .catch((reason) => { console.log("An error ocurred :: ", reason); });
             }else{
                 alert('Session is expired');
                 this.cta.login();

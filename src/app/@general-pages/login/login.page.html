@@ -14,10 +14,12 @@
   </div>
   <div class="row" style="margin: 0 10% 0 10%;">
       <div class="login-entry">
-          <label id="error-login" class="mensaje-error-login">Error con los datos suministrados</label>
-          <input type="text" id="user-login" class="input-login" placeholder="Usuario" style="margin-bottom: 5px;" onfocus="hideError()">
-          <input type="password" id="user-password" class="input-login" placeholder="Contraseña" onfocus="hideError()">
-        <input type="button" id="button-login" class="button-login" value="INGRESAR">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" novalidate>            
+            <label id="error-login" class="mensaje-error-login">Error con los datos suministrados</label>
+            <input type="text" id="user-login" class="input-login" placeholder="Usuario" style="margin-bottom: 5px;" onfocus="hideError()" formControlName="username">
+            <input type="password" id="user-password" class="input-login" placeholder="Contraseña" onfocus="hideError()" formControlName="password">
+            <input type="submit" id="button-login" class="button-login" value="INGRESAR">
+          </form>
       </div>
       <a>
           <p>

@@ -31,11 +31,22 @@ export class UserApi {
 	 * @param password
 	 */
 	public login(username:string, password:string):Observable<BackendModel>{
-		return this.apiService
+		/*return this.apiService
 			.post(`user/login`, {
 				username: username,
 				password: password
-			}).map(response => response.json());
+			}).map(response => response.json());*/
+		return Observable.create(observer => {
+			observer.next({
+				state: "success",
+				msg: "user succesfully logged in",
+				data: {
+					token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTW9pc8OpcyBCZXJlbmd1ZXIiLCJlbWFpbCI6Im1vaXNlcy5iZXJlbmd1ZXJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJpcnVnaDkyMzQ4dGciLCJ0eXBlIjoiYWRtaW5pc3RyYXRvciJ9.ZUXEr360spYLgYNmXGgUhaZiyvT61eNzOEO7uUTxpjQ`
+				},
+				status: 201
+			});
+			observer.complete();
+		});
 	}
 
 	/**
