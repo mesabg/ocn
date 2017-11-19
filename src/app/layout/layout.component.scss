@@ -5,19 +5,19 @@ app-layout{
 
 @font-face {
 	font-family: "AvenirBlack";
-	src: url('../../fonts/Avenir-Black.ttf');
+	src: url('../../assets/fonts/Avenir-Black.ttf');
 }
 @font-face {
 	font-family: "AvenirMedium";
-	src: url('../../fonts/Avenir-Medium.ttf');
+	src: url('../../assets/fonts/Avenir-Medium.ttf');
 }
 @font-face {
 	font-family: "AvenirBook";
-	src: url('../../fonts/Avenir-Book.ttf');
+	src: url('../../assets/fonts/Avenir-Book.ttf');
 }
 @font-face {
 	font-family: "AvenirLight";
-	src: url('../../fonts/Avenir-Light.ttf');
+	src: url('../../assets/fonts/Avenir-Light.ttf');
 }
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
@@ -105,7 +105,7 @@ body, html{
 	position:fixed;
 	width:100%;
 	height:100%;
-	background-image: url(../../img/splash.jpg);
+	background-image: url(../../../img/splash.jpg);
 	background-size: cover;
 	background-position: 50% 50%;
 	z-index:999;
