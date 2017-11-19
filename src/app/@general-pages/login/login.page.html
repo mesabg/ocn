@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+
+<div id="splash" class="seccion"></div>
+
+<div id="login" class="Login">
+  <div class="row Login-Superior">
+      <img src="img/icon-carrito.png">
+      <p>
+          <strong>SGP</strong>
+          <br>
+          Sistema de gestión de personal
+      </p>
+  </div>
+  <div class="row" style="margin: 0 10% 0 10%;">
+      <div class="login-entry">
+          <label id="error-login" class="mensaje-error-login">Error con los datos suministrados</label>
+          <input type="text" id="user-login" class="input-login" placeholder="Usuario" style="margin-bottom: 5px;" onfocus="hideError()">
+          <input type="password" id="user-password" class="input-login" placeholder="Contraseña" onfocus="hideError()">
+        <input type="button" id="button-login" class="button-login" value="INGRESAR">
+      </div>
+      <a>
+          <p>
+              Recuperar Contraseña?
+          </p>
+      </a>
+  </div>
+</div>
