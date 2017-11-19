@@ -1,1 +1,1 @@
-export { ActiveTasksPage } from './active-tasks.page';
+export { ActiveTasksPageModule } from './active-tasks.page.module';

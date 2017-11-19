@@ -1,1 +1,1 @@
-export { MyTasksPage } from './my-tasks.page';
+export { MyTasksPageModule } from './my-tasks.page.module';

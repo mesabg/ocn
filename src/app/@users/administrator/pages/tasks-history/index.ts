@@ -1,1 +1,1 @@
-export { TasksHistoryPage } from './tasks-history.page';
+export { TasksHistoryPageModule } from './tasks-history.page.module';
