@@ -2,5 +2,7 @@
   "name": "ocn",
   "app_id": "0033d31e",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

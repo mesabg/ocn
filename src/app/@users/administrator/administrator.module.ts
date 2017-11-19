@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './layout/layout.component';
+
+//-- Local
+import { Layout } from './layout';
+import { PagesModule } from './pages';
+import { AdministratorRoutingModule } from './administrator.routing';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PagesModule,
+    AdministratorRoutingModule
   ],
-  declarations: [LayoutComponent]
+  declarations: [
+    Layout
+  ]
 })
 export class AdministratorModule { }
