@@ -1,0 +1,1 @@
+export { TasksHistoryPage } from './tasks-history.page';

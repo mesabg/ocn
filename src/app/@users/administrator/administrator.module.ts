@@ -14,6 +14,9 @@ import { AdministratorRoutingModule } from './administrator.routing';
   ],
   declarations: [
     Layout
+  ],
+  entryComponents: [
+    Layout
   ]
 })
 export class AdministratorModule { }

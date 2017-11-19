@@ -1,0 +1,1 @@
+export { AddTaskPage } from './add-task.page';
