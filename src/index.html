@@ -15,22 +15,36 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+  <!-- Global needs -->
+  <script src="assets/js/jquery-3.1.1.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="assets/css/menuicon/demo.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/menuicon/component.css" />
+  <!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script src="assets/js/menuicon/segment.min.js"></script>
+  <script src="assets/js/menuicon/ease.min.js"></script>
+
+  
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
-
+  
   <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('service worker installed'))
         .catch(err => console.error('Error', err));
-    }
-  </script>-->
-
+      }
+    </script>-->
+    
   <link href="build/main.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/css.css">
+  <script src="assets/js/app.js?asd=d"></script>
 
 </head>
-<body>
+<body onresize="responsive()">
 
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
