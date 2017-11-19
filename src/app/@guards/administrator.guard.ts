@@ -24,11 +24,20 @@ export class AdministratorGuard implements CanActivate {
 	canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-		if (this.authentication.isLoggedIn() && this.authentication.isAdministrator())
-			return true;
-		else {
-			this.authentication.redirect();
-			return false;
-		}
+		
+		return new Promise((resolve, reject) => {
+			this.authentication.isLoggedIn()
+			.then((auth) => {
+				if (auth && this.authentication.isAdministrator())
+					resolve(true);
+				else {
+					this.authentication.redirect();
+					resolve(false);
+				}
+			})	
+			.catch((reason) => {
+				reject(reason);
+			});
+		});	
 	}
 }
