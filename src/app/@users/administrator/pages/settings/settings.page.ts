@@ -8,7 +8,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 @Component({
   selector: 'app-administrator-settings-page',
-  templateUrl: './settings.component.html',
+  templateUrl: './settings.page.html',
   encapsulation: ViewEncapsulation.None
 })
 export class SettingsPage implements OnInit {

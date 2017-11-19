@@ -2,6 +2,7 @@
  * Global imports
  */
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { 
     AuthHttp, 
     tokenNotExpired, 
@@ -27,7 +28,8 @@ export class AuthenticationService {
 
     constructor(
         private api:UserApi,
-        private cta:CTAService){}
+        private cta:CTAService,
+        private storage:Storage){}
 
     /**
      * Methods
@@ -42,7 +44,7 @@ export class AuthenticationService {
         this.api.login(username, password)
 				.subscribe((response:BackendModel) => {
 					if (response.status === 201){
-                        sessionStorage.setItem('token', response.data.token);
+                        this.storage.set('token', response.data.token);
                         this.redirect();
                     }else {
                         alert(`Login failed :: \n msg :: ${response.msg} \n data :: ${response.data}`);
@@ -54,7 +56,7 @@ export class AuthenticationService {
         this.api.logout()
 				.subscribe((response:BackendModel) => {
 					if (response.data === 200) {
-                        sessionStorage.removeItem('token');
+                        this.storage.remove('token');
                         alert("Logout success");
                         this.cta.login();
                     } else
@@ -73,9 +75,17 @@ export class AuthenticationService {
 		});
     }
 
-    public isLoggedIn():boolean{
-        let token = sessionStorage.getItem('token');
-        return !tokenNotExpired() && token != null && token != undefined;
+    public isLoggedIn():Promise<boolean>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                resolve( !tokenNotExpired() && token != null && token != undefined );
+            })
+            .catch((reason) => {
+                console.log("An error ocurred :: ", reason);
+                reject(reason);
+            });
+        });
     }
     
     public isGeneral():boolean{
@@ -109,25 +119,29 @@ export class AuthenticationService {
     public redirect():void{
         let token = sessionStorage.getItem('token');
 
-        if (this.isLoggedIn()){
-            let decodeToken = this.jwt.decodeToken(token);
-            switch (decodeToken.type) {
-                case 'reader':
-                    this.cta.readerView();
-                    break;
-                case 'creator':
-                    this.cta.creatorView();
-                    break;
-                case 'administrator':
-                    this.cta.administratorView();
-                    break;
-                default:
-                    this.cta.login();
-                    break;
+        this.isLoggedIn()
+        .then((logged) => {
+            if (logged){
+                let decodeToken = this.jwt.decodeToken(token);
+                switch (decodeToken.type) {
+                    case 'general':
+                        this.cta.generalView();
+                        break;
+                    case 'administrator':
+                        this.cta.administratorView();
+                        break;
+                    default:
+                        this.cta.login();
+                        break;
+                }
+            }else{
+                alert('Session is expired');
+                this.cta.login();
             }
-        }else{
-            alert('Session is expired');
-            this.cta.login();
-        }
+        })
+        .catch((reason) => {
+            console.log("An error ocurred :: ", reason);
+        });
+
     }
 }
