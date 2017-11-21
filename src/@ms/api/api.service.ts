@@ -2,7 +2,7 @@
  * Global Imports
  */
 import { Injectable } from '@angular/core';
-import { Http, RequestOptionsArgs, RequestMethod, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
@@ -42,6 +42,7 @@ export class ApiService {
 		this.headers = new Headers();
 		this.headers.append('Content-Type', 'application/json');
 	}
+
 
 	/**
 	 * Common http calls

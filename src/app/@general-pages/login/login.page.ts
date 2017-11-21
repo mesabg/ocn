@@ -1,10 +1,17 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 //-- Local imports
 import { LoginModel } from '../../@model';
 import { AuthenticationService } from '../../@services';
 
+
+
+@IonicPage({
+	name: 'app-login-page',
+	segment: 'login'
+})
 @Component({
   selector: 'app-login-page',
   templateUrl: './login.page.html',
@@ -21,7 +28,7 @@ export class LoginPage implements OnInit {
     this.createForm(); 
     this.authentication.isLoggedIn()
     .then((auth) => {
-      if (auth) this.authentication.redirect();
+      if (auth.loggedIn) this.authentication.redirect();
     })
     .catch((reason) => { /*DO NOTHING*/ });
   }

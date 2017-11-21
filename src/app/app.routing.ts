@@ -10,7 +10,7 @@ import { PreloadAllModules } from '@angular/router';
 /**
  * Modules imports
  */
-import { GeneralPagesModule } from './@general-pages';
+//import { GeneralPagesModule } from './@general-pages';
 
 /**
  * Guards import
@@ -30,32 +30,31 @@ import {
  * Local imports
  */
 import { AppPreloader } from './app.preloader';
-import { AdministratorModule } from './@users/administrator/administrator.module';
+import { GeneralModule } from './@users/general/general.module';
 
 const routes: Routes = [{
 	path: '',
 	children: [
-		{ path: '', redirectTo: 'login', pathMatch:'full' },
+		/*{ path: '', redirectTo: 'login', pathMatch:'full' },
 		{ path: 'login', component: LoginPage },
-		{ path: 'register', component: RegisterPage },
+		{ path: 'register', component: RegisterPage },*/
 
 		//-- Lazy load modules
-		{ 
+		/*{ 
 			path: 'general', 
-			loadChildren: './@users/general/general.module#GeneralModule', 
+			loadChildren: () => GeneralModule, 
 			canActivate:[GeneralGuard] 
 		},
 		{ 
 			path: 'administrator', 
-			loadChildren: () => AdministratorModule/*'src/app/@users/administrator/administrator.module#AdministratorModule'*/, 
+			loadChildren: () => AdministratorModule, 
 			canActivate:[AdministratorGuard]
-		}
+		}*/
 	]
 }];
 
 @NgModule({
 	imports: [
-		GeneralPagesModule,
 		RouterModule.forRoot(routes, {useHash: true, preloadingStrategy: PreloadAllModules}) 
 	],
 	exports: [ RouterModule ],

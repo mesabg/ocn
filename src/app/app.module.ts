@@ -16,7 +16,7 @@ import { RoutingModule } from './app.routing';
   imports: [
     BrowserModule,
     GuardsModule,
-    RoutingModule,
+    //RoutingModule,
     IonicModule.forRoot(Layout)
   ],
   bootstrap: [IonicApp],

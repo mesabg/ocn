@@ -28,7 +28,7 @@ export class GeneralGuard implements CanActivate {
 		return new Promise((resolve, reject) => {
 			this.authentication.isLoggedIn()
 			.then((auth) => {
-				if (auth && this.authentication.isGeneral())
+				if (auth.loggedIn && auth.type === 'general')
 					resolve(true);
 				else {
 					this.authentication.redirect();

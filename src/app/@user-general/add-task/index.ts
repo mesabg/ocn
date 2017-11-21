@@ -1,0 +1,1 @@
+export { AddTaskPageModule } from './add-task.page.module';

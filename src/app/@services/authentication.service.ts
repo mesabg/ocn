@@ -4,7 +4,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { 
-    AuthHttp, 
     tokenNotExpired, 
     JwtHelper } from 'angular2-jwt';
 
@@ -75,11 +74,22 @@ export class AuthenticationService {
 		});
     }
 
-    public isLoggedIn():Promise<boolean>{
+    public isLoggedIn():Promise<{
+        loggedIn:boolean,
+        type:string
+    }>{
         return new Promise((resolve, reject) => {
             this.storage.get('token')
             .then((token) => {
-                resolve( !tokenNotExpired() && token != null && token != undefined );
+                let loggedIn = !tokenNotExpired() && token != null && token != undefined;
+                this.getType()
+                .then((type) => {
+                    resolve({
+                        loggedIn: loggedIn,
+                        type: type
+                    });
+                })
+                .catch((reason) => { reject(reason); });
             })
             .catch((reason) => {
                 console.log("An error ocurred :: ", reason);
@@ -88,56 +98,75 @@ export class AuthenticationService {
         });
     }
     
-    public isGeneral():boolean{
-        let token = sessionStorage.getItem('token');
-        let decodeToken = this.jwt.decodeToken(token);
-        if (decodeToken.type === 'general')
-            return true;
-        return false;
+    public isGeneral():Promise<boolean>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                let decodeToken = this.jwt.decodeToken(token);
+                if (decodeToken.type === 'general'){
+                    resolve(true);
+                    return;
+                }
+                resolve(false);
+            })
+            .catch((reason) => { console.log("An error ocurred :: ", reason); reject(reason); });
+        });
     }
 
-    public isAdministrator():boolean{
-        let token = sessionStorage.getItem('token');
-        let decodeToken = this.jwt.decodeToken(token);
-        if (decodeToken.type === 'administrator')
-            return true;
-        return false;
+    public isAdministrator():Promise<boolean>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                let decodeToken = this.jwt.decodeToken(token);
+                if (decodeToken.type === 'administrator'){
+                    resolve(true);
+                    return;
+                }
+                resolve(false);
+            })
+            .catch((reason) => { console.log("An error ocurred :: ", reason); reject(reason); });
+        });
     }
 
-    public getUsername():string{
-        let token = sessionStorage.getItem('token');
-        let decodeToken = this.jwt.decodeToken(token);
-        return decodeToken.username;
+    public getUsername():Promise<string>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                let decodeToken = this.jwt.decodeToken(token);
+                resolve(decodeToken.username);
+            })
+            .catch((reason) => { console.log("An error ocurred :: ", reason); });
+        });
     }
 
-    public getType():string{
-        let token = sessionStorage.getItem('token');
-        let decodeToken = this.jwt.decodeToken(token);
-        return decodeToken.type;
+    public getType():Promise<string>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                if (token === null || token === undefined) reject(token);
+                let decodeToken = this.jwt.decodeToken(token);
+                resolve(decodeToken.type);
+            })
+            .catch((reason) => { console.log("An error ocurred :: ", reason); });
+        });
     }
 
     public redirect():void{
         
         this.isLoggedIn()
-        .then((logged) => {
-            let token:string;
-            if (logged){
-                this.storage.get('token')
-                .then((token) => {
-                    let decodeToken = this.jwt.decodeToken(token);
-                    switch (decodeToken.type) {
-                        case 'general':
-                            this.cta.generalView();
-                            break;
-                        case 'administrator':
-                            this.cta.administratorView();
-                            break;
-                        default:
-                            this.cta.login();
-                            break;
-                    }
-                })
-                .catch((reason) => { console.log("An error ocurred :: ", reason); });
+        .then((auth) => {
+            if (auth.loggedIn){
+                switch (auth.type) {
+                    case 'general':
+                        this.cta.generalView();
+                        break;
+                    case 'administrator':
+                        this.cta.administratorView();
+                        break;
+                    default:
+                        this.cta.login();
+                        break;
+                }
             }else{
                 alert('Session is expired');
                 this.cta.login();

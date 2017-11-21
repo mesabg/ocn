@@ -6,7 +6,9 @@
  * @param type => User type ['administrator', 'general']
  */
 export interface User {
+    id:Number;
     name:string;
+    photo:string;
     email:string;
     password:string;
     type:string;

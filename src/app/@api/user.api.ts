@@ -14,7 +14,7 @@ import { UserModel, BackendModel } from '../@model';
 /**
  * API Import
  */
-import { ApiService, LazyParser, ServerError } from '../../@ms/api';
+import { ApiService } from '../../@ms/api';
 
 /**
  * Service description
