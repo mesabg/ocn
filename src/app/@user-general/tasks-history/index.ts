@@ -1,1 +1,0 @@
-export { TasksHistoryPageModule } from './tasks-history.page.module';

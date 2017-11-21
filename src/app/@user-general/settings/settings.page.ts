@@ -3,11 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
 @IonicPage({
-	name: 'app-administrator-settings-page',
-	segment: 'administrator/settings'
+	name: 'app-general-settings-page',
+	segment: 'general/settings'
 })
 @Component({
-  selector: 'app-administrator-settings-page',
+  selector: 'app-general-settings-page',
   templateUrl: './settings.page.html',
   encapsulation: ViewEncapsulation.None
 })

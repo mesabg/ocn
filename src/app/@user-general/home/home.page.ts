@@ -3,11 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
 @IonicPage({
-	name: 'app-administrator-home-page',
-	segment: 'administrator/home'
+	name: 'app-general-home-page',
+	segment: 'general/home'
 })
 @Component({
-  selector: 'app-administrator-home-page',
+  selector: 'app-general-home-page',
   templateUrl: './home.page.html',
   encapsulation: ViewEncapsulation.None
 })

@@ -3,11 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 
 @IonicPage({
-	name: 'app-administrator-add-task-page',
-	segment: 'administrator/add-task'
+	name: 'app-general-add-task-page',
+	segment: 'general/add-task'
 })
 @Component({
-  selector: 'app-administrator-add-task-page',
+  selector: 'app-general-add-task-page',
   templateUrl: './add-task.page.html',
   encapsulation: ViewEncapsulation.None
 })
