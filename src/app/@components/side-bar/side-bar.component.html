@@ -3,12 +3,12 @@
 <div class="my-sidebar" id="my-sidebar">
     <div class="header-sidebar">
         <div class="imagen-sidebar">
-            <img  src="assets/img/raffa.jpg">
+            <img id="user-image">
         </div>
 
         <div>
-            <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">Raffaele Ranaldo</p>
-            <p style="margin-top: -16px;font-size: 13px;">ranaldoraffaele@gmail.com</p>
+            <p id="user-name" style="margin-top: 18px; font-size: 18px;font-weight: bold;"></p>
+            <p id="user-email" style="margin-top: -16px;font-size: 13px;"></p>
         </div>
     </div>
     <hr>
@@ -18,7 +18,7 @@
                 <img  src="assets/img/iconos/offpage-iconhome.png">
             </div>
 
-            <div class="text-opcion"> Inicio </div>
+            <div class="text-opcion" id="goto-inicio"> Inicio </div>
         </div>
         <div class="opcion-sidebar">
             <div class="icon-sidebar">
@@ -29,7 +29,18 @@
                 Mis Tareas
             </div>
         </div>
+
+        <div class="opcion-sidebar">
+            <div class="icon-sidebar">
+                <img  src="assets/img/iconos/offpage-iconlogout.png">
+            </div>
+
+            <div class="text-opcion">
+                Finalizar jornada
+            </div>
+        </div>
         <hr>
+
         <div class="opcion-sidebar">
             <div class="icon-sidebar">
                 <img  src="assets/img/iconos/offpage-iconsetting.png">
@@ -51,7 +62,7 @@
         </div>
 
         <div class="footer-sidebar" onclick="closeSidebar()">
-            Cerrar
+            <a style="color:white;">Cerrar</a>
             <img style="float:right;height:20px;" src="assets/img/iconos/icon-direct.png">
         </div>
     </div>

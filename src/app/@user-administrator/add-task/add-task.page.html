@@ -1,3 +1,54 @@
-<p>
-  add-task works!
-</p>
+
+<div style="background-color: white;">
+
+<div id="crear-tarea">
+    <div class="container-box">
+        <label>Nombre de Tarea:</label>
+         <input class="input-data" type="text" required id="nombre_tarea" placeholder="Ejemplo Tarea" [(ngModel)]="tarea.nombre">
+    </div>
+    <div class="container-box">
+        <label>Descripción:</label>
+        <textarea class="input-data" required id="descripcion_tarea" placeholder="Ejemplo descripcion" [(ngModel)]="tarea.descripcion">
+        </textarea>
+    </div>
+    <div class="container-box assing" onclick="asignar_personal()">
+        <label>Asignar a :</label>
+
+        <div *ngFor="let user of selectedOnes" class="header-sidebar">
+            <div class="imagen-sidebar">
+                    <img  [attr.src]="user.img">
+            </div>
+
+            <div>
+                <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ user.name }}</p>
+                <p style="margin-top: -16px;font-size: 13px;">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="botones-box">
+        <input type="button" id="button-volver" class="button-doble back-button" value="VOLVER" (click)="volver()">
+        <input type="button" id="button-crear" class="button-doble success-botton" value="CREAR ACTIVIDAD" (click)="crearTask()">
+    </div>
+</div>
+<div id="asignar-personal">
+    <div class="container-box">
+        <label>
+            <span style="text-align:left;">Selecionar empleados:</span>    
+            <span class="x-button" onclick="closeAsignarPersonal()">X</span>    
+        </label>
+        <div class=" max-select">
+            <div *ngFor="let user of testArray; let i = index;" class="header-sidebar personal-select" (click)="addSelected(user, i)" onclick="clickPersonal(this)">
+                <div class="imagen-sidebar">
+                    <img  [attr.src]="user.img">
+                </div>
+
+                <div>
+                    <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ user.name }}</p>
+                    <p style="margin-top: -16px;font-size: 13px;">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

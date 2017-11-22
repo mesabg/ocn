@@ -39,16 +39,21 @@ export class AuthenticationService {
      *  token:String
      * }
      */
-    public login(username:string, password:string):void{
-        this.api.login(username, password)
-				.subscribe((response:BackendModel) => {
-					if (response.status === 201){
-                        this.storage.set('token', response.data.token);
-                        this.redirect();
-                    }else {
-                        alert(`Login failed :: \n msg :: ${response.msg} \n data :: ${response.data}`);
-                    }
-				});
+    public login(username:string, password:string):Promise<string>{
+        return new Promise((resolve, reject) => {
+            this.api.login(username, password)
+                    .subscribe((response:BackendModel) => {
+                        if (response.status === 201){
+                            this.storage.set('token', response.data.token);
+                            this.redirect();
+                            let decodeToken = this.jwt.decodeToken(response.data.token);
+                            resolve(decodeToken.type);
+                        }else {
+                            alert(`Login failed :: \n msg :: ${response.msg} \n data :: ${response.data}`);
+                            reject();
+                        }
+                    });
+        });
     };
 
     public logout():void{
@@ -134,6 +139,24 @@ export class AuthenticationService {
             .then((token) => {
                 let decodeToken = this.jwt.decodeToken(token);
                 resolve(decodeToken.username);
+            })
+            .catch((reason) => { console.log("An error ocurred :: ", reason); });
+        });
+    }
+
+    public getUser():Promise<UserModel>{
+        return new Promise((resolve, reject) => {
+            this.storage.get('token')
+            .then((token) => {
+                let decodeToken = this.jwt.decodeToken(token);
+                resolve({
+                    id: decodeToken.id,
+                    name: decodeToken.name,
+                    photo: decodeToken.photo,
+                    email: decodeToken.email,
+                    password: decodeToken.password,
+                    type: decodeToken.type
+                });
             })
             .catch((reason) => { console.log("An error ocurred :: ", reason); });
         });

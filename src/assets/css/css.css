@@ -142,7 +142,6 @@ body, html{
 	height: 100%;
 }
 #crear-tarea{
-	display:none;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -208,6 +207,7 @@ body, html{
 	background-color:#40f684;
 }
 .back-button{
+	display: initial;
 	background-color:#23efff;
 }
 .opcion-menu-principal{
@@ -425,4 +425,23 @@ text-align: center;
 .Login-Superior p strong{
 	font-family: 'AvenirBlack';
 	font-size: 2.5em;
+}
+
+.x-button{
+	position: absolute;
+    float: right;
+	right: 9%;
+	font-weight: bold;
+	color: red;
+}
+
+
+.personal-select[selected]{
+	background-color: rgba(60, 70, 115, 0.3);
+}
+
+.assing{
+	min-height: 38px;
+    max-height: 260px;
+    overflow: scroll;
 }

@@ -3,6 +3,7 @@
  */
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+import { Camera } from '@ionic-native/camera';
 
 //-- Local
 import { ServicesModule } from '../../@services';
@@ -19,6 +20,9 @@ import { LoginPage } from './login.page';
         IonicPageModule.forChild(LoginPage)
     ],
     entryComponents: [LoginPage],
-    exports: [LoginPage]
+    exports: [LoginPage],
+    providers: [
+        Camera
+    ]
 })
 export class LoginPageModule { }

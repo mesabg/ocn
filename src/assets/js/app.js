@@ -98,6 +98,16 @@ function asignar_personal(){
       $("#asignar-personal").show();
     paginaActiva="asignar-personal";
 }
+function closeAsignarPersonal(){
+    $("#asignar-personal").hide();
+}
+function clickPersonal(elem){
+    if($(elem).is('selected') || $(elem).attr('selected') ){
+        $(elem).attr('selected', false);
+    }else{
+        $(elem).attr('selected', true);
+    }
+}
 function closeSidebar() {
    document.getElementById("my-sidebar").style.display = "none";
     document.getElementById("fondo-sidebar").style.display = "none";

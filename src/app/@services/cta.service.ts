@@ -18,16 +18,19 @@ export class CTAService {
 
 	constructor(private appCtrl:App) { }
 
-	public login():void { this.appCtrl.getRootNav().setRoot('app-login-page'); this.appCtrl.getRootNav().push('app-login-page'); }
+	public login():void { /*this.appCtrl.getRootNav().setRoot('app-login-page'); this.appCtrl.getRootNav().push('app-login-page');*/ }
 	public register():void { /*this.appCtrl.getRootNav().setRoot('app-register-page'); this.appCtrl.getRootNav().push('app-register-page');*/ }
 
 	/**
 	 * General
 	 */
-	public generalView():void { this.appCtrl.getRootNav().setRoot('app-general-home-page'); this.appCtrl.getRootNav().push('app-general-register-page'); }
+	public generalView():void { /*this.appCtrl.getRootNav().setRoot('app-general-home-page'); this.appCtrl.getRootNav().push('app-general-register-page');*/ }
 
     /**
      * Administrator
      */
-	public administratorView():void { this.appCtrl.getRootNav().setRoot('app-administrator-home-page'); this.appCtrl.getRootNav().push('app-administrator-register-page'); }
+	public administratorView():void { 
+		/*console.log("Some ", this.appCtrl.getRootNav());
+		this.appCtrl.getRootNav().push('app-administrator-register-page'); */
+	}
 }

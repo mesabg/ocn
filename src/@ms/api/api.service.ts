@@ -15,9 +15,9 @@ const environment = {
 	production: false,
 	API:{
 		protocol: 'http',
-		baseURL: 'localhost',
+		baseURL: 'sgp.uy/api/v1',
 		port: '3000',
-		get: function():string{ return `${environment.API.protocol}://${environment.API.baseURL}:${environment.API.port}/`; }
+		get: function():string{ return `${environment.API.protocol}://${environment.API.baseURL}/`; }
 	},
 	SOCKET:{
 		protocol: 'http',
