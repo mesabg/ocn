@@ -2,7 +2,7 @@
  * Global imports
  */
 import { Injectable, EventEmitter } from '@angular/core';
-//import { Router, NavigationStart } from '@angular/router';
+import { App } from 'ionic-angular';
 
 /**
  * Service description
@@ -16,25 +16,18 @@ export class CTAService {
 	public routeChange:EventEmitter<string> = new EventEmitter<string>();
 	public actualRoute:string;
 
-	constructor(/*private router:Router*/) {
-		/*this.actualRoute = this.router.url;
-		this.router.events
-			.subscribe((navigation) =>{
-				if ((navigation instanceof NavigationStart))
-					this.routeChange.emit(navigation.url);
-			});*/
-	}
+	constructor(private appCtrl:App) { }
 
-	public login():void { /*this.router.navigateByUrl('/login');*/ }
-	public register():void { /*this.router.navigateByUrl('/register');*/ }
+	public login():void { this.appCtrl.getRootNav().setRoot('app-login-page'); this.appCtrl.getRootNav().push('app-login-page'); }
+	public register():void { /*this.appCtrl.getRootNav().setRoot('app-register-page'); this.appCtrl.getRootNav().push('app-register-page');*/ }
 
 	/**
 	 * General
 	 */
-	public generalView():void { /*this.router.navigateByUrl('/general');*/ }
+	public generalView():void { this.appCtrl.getRootNav().setRoot('app-general-home-page'); this.appCtrl.getRootNav().push('app-general-register-page'); }
 
     /**
      * Administrator
      */
-	public administratorView():void { /*this.router.navigateByUrl('/administrator');*/ }
+	public administratorView():void { this.appCtrl.getRootNav().setRoot('app-administrator-home-page'); this.appCtrl.getRootNav().push('app-administrator-register-page'); }
 }

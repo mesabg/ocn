@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Layout } from './layout';
 import { GuardsModule } from './@guards';
-import { RoutingModule } from './app.routing';
+import { ComponentsModule } from './@components';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { RoutingModule } from './app.routing';
   imports: [
     BrowserModule,
     GuardsModule,
-    //RoutingModule,
+    ComponentsModule,
     IonicModule.forRoot(Layout)
   ],
   bootstrap: [IonicApp],

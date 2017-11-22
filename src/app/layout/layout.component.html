@@ -1,4 +1,14 @@
 <!--<div id="page" class="page-content">
     <router-outlet></router-outlet>
 </div>-->
-<ion-nav #navigator [root]="rootPage"></ion-nav>
+<div id="page" class="page-content">
+    <div id="Home" class="Home">
+        <div class="row">
+            <app-top-bar></app-top-bar>
+            <div id="content-app">
+                <ion-nav #navigator [root]="rootPage"></ion-nav>
+            </div>
+            <app-side-bar></app-side-bar>
+        </div>
+    </div>        
+</div>
