@@ -31,12 +31,12 @@ export class UserApi {
 	 * @param password
 	 */
 	public login(username:string, password:string):Observable<BackendModel>{
-		/*return this.apiService
+		return this.apiService
 			.post(`user/login`, {
 				username: username,
 				password: password
-			}).map(response => response.json());*/
-		return Observable.create(observer => {
+			}).map(response => response.json());
+		/*return Observable.create(observer => {
 			observer.next({
 				state: "success",
 				msg: "user succesfully logged in",
@@ -46,7 +46,7 @@ export class UserApi {
 				status: 201
 			});
 			observer.complete();
-		});
+		});*/
 	}
 
 	/**
@@ -64,6 +64,23 @@ export class UserApi {
 	public register(user:UserModel):Observable<BackendModel>{
 		return this.apiService
 			.post(`user/register`, user)
+			.map(response => response.json());
+	}
+
+
+	/**
+	 * Get user information
+	 */
+	public getUserData():Observable<BackendModel>{
+		return this.apiService
+			.authPost(`isAuthenticate`, null)
+			.map(response => response.json());
+	}
+
+
+	public getAllUsers():Observable<BackendModel>{
+		return this.apiService
+			.authGet('users')
 			.map(response => response.json());
 	}
 }

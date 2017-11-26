@@ -28,27 +28,46 @@ export class LoginPage implements OnInit {
     public navParams:NavParams,
     private camera: Camera) { }
 
-  ngOnInit() { 
+  async ngOnInit() { 
     this.createForm(); 
-    this.authentication.isLoggedIn()
-    .then((auth) => {
-      if (auth.loggedIn) this.authentication.redirect();
-    })
-    .catch((reason) => { /*DO NOTHING*/ });
+
+    try {
+      let auth = await this.authentication.isLoggedIn();
+      if (auth.loggedIn){
+        if (auth.type === 'administrator' || auth.type === 'root' || auth.type === 'supervisor') 
+          this.navCtrl.push('app-administrator-home-page');
+        else if (auth.type === 'employee') 
+          this.navCtrl.push('app-general-home-page');
+      }
+    } catch (reason) {
+      console.log("An error ocurred :: ", reason);
+    }
   }
 
   //-- OnSubmit funcionallity
-  onSubmit(loginData:LoginModel) {
-    this.authentication.login(loginData.username, loginData.password)
-    .then((usertype) => {
+  public async onSubmit(loginData:LoginModel){
+    try {
+      await this.authentication.login(loginData.username, loginData.password);
+      let user = await this.authentication.getUser();
+      console.log("User data is :: ", user);
+      let picture = await this.takePicture();
+      console.log("Picture :: ", picture);
+
+      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor') this.navCtrl.push('app-administrator-home-page');
+      else if (user.type === 'employee') this.navCtrl.push('app-general-home-page');
+    } catch (reason) {
+      console.log("Error on submit :: ", reason);
+    }
+
+    /*.then((usertype) => {
       this.takePicture()
       .then((picture) => {
         console.log("Picture :: ", picture);
-        if (usertype === 'administrator') this.navCtrl.push('app-administrator-home-page');
-        else if (usertype === 'general') this.navCtrl.push('app-general-home-page');
+        if (usertype === 'administrator' || usertype === 'root' || usertype === 'supervisor') this.navCtrl.push('app-administrator-home-page');
+        else if (usertype === 'employee') this.navCtrl.push('app-general-home-page');
       })
-      .catch((err) => { /*DO NOTHING*/ });
-    });
+      .catch((err) => { });
+    });*/
   }
 
 

@@ -31,7 +31,6 @@ export class GeneralGuard implements CanActivate {
 				if (auth.loggedIn && auth.type === 'general')
 					resolve(true);
 				else {
-					this.authentication.redirect();
 					resolve(false);
 				}
 			})	

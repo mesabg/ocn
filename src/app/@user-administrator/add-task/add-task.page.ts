@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import $ from 'jquery';
 import { AuthenticationService } from '../../@services';
+import { UserApi, TaskApi } from '../../@api';
 
 @IonicPage({
 	name: 'app-administrator-add-task-page',
@@ -17,62 +18,48 @@ export class AddTaskPage implements OnInit {
 		nombre:'',
 		descripcion:''
 	};
-
-	public testArray = [
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		},
-		{
-			img: "assets/img/raffa.jpg",
-			name: "Moisés Berenguer",
-			email: "moises.berenguer@gmail.com"
-		}
-	];
-
+	
+	public testArray = [];
 	public selectedOnes = [];
 
-	constructor(private auth:AuthenticationService, public navCtrl:NavController, public navParams:NavParams) { }
+	constructor(
+		private auth:AuthenticationService, 
+		private userApi:UserApi, 
+		private taskApi:TaskApi,
+		public navCtrl:NavController, 
+		public navParams:NavParams) { }
+
 	ngOnInit() { }
 	ionViewDidLoad(){ }
 	ionViewWillLeave(){ }
 
-	ngAfterViewInit(){
+	async ngAfterViewInit(){
 		$('#content-app').css('top', '52px');
 		$('#page-title').text('Agregar Tarea');
 
-		this.auth.getUser()
-		.then((user) => {
-			$('#user-image').attr('src', 'assets/img/raffa.jpg');
+		try {
+			//-- Load User "Refresh save"
+			let user = await this.auth.getUser();
+			$('#user-image').attr('src', user.photo);
 			$('#user-name').text(user.name);
 			$('#user-email').text(user.email);
-		});
+
+			//-- Load User list
+			let response = await this.userApi.getAllUsers().toPromise();
+			let users:any[] = response.data;
+			this.testArray = [];
+			users.forEach((template) => {
+				let _user = template.usuario;
+				this.testArray.push({
+					id: _user.id,
+					img: _user.photo,
+					name: _user.name,
+					email: _user.email
+				});
+			});
+		} catch (reason) {
+			console.log("An error ocurred :: ", reason);
+		}
 
 
 		//-- Event listening
@@ -93,8 +80,42 @@ export class AddTaskPage implements OnInit {
 	}
 
 
-	public crearTask(){
-		console.log(this.tarea, this.selectedOnes);
+	public async crearTask():Promise<any>{
+		if (this.tarea.nombre == '' || this.tarea.descripcion == '' || this.selectedOnes.length == 0){
+			//-- Faltan datos
+			$("#tarea-error")
+				.find('span')
+				.text('Por favor complete los datos del formulario para poder realizar esta acción');
+			$("#tarea-error").show();
+			return;
+		}
+
+		//-- Enviar petición
+		let ids = {};
+		this.selectedOnes.forEach((usr) => {
+			ids[usr.id] = usr.id;
+		});
+		let response = await this.taskApi.create(
+			this.tarea.nombre, 
+			this.tarea.descripcion,
+			ids
+		);
+
+		//-- limpiar y mostrar success
+		if (response.state === "success"){
+			this.tarea.nombre = "";
+			this.tarea.descripcion = "";
+			this.selectedOnes = [];
+			$("#tarea-creada").show();
+		}else{
+			this.tarea.nombre = "";
+			this.tarea.descripcion = "";
+			this.selectedOnes = [];
+			$("#tarea-error")
+				.find('span')
+				.text('Ocurrió un error al registrar sus datos, por favor intente de nuevo');
+			$("#tarea-error").show();
+		}
 	}
 
 

@@ -9,11 +9,13 @@ import { IonicPageModule } from 'ionic-angular';
  */
 import { AddTaskPage } from './add-task.page';
 import { ServicesModule } from '../../@services';
+import { ApiModule } from '../../@api';
 
 @NgModule({
     declarations: [AddTaskPage],
     imports: [
         ServicesModule,
+        ApiModule,
         IonicPageModule.forChild(AddTaskPage)
     ],
     entryComponents: [AddTaskPage],

@@ -98,9 +98,9 @@ function asignar_personal(){
       $("#asignar-personal").show();
     paginaActiva="asignar-personal";
 }
-function closeAsignarPersonal(){
-    $("#asignar-personal").hide();
-}
+function closeAsignarPersonal(){ $("#asignar-personal").hide(); }
+function closeTareaCreada(){ $("#tarea-creada").hide(); }
+function closeHaOcurridoUnError(){ $("#tarea-error").hide(); }
 function clickPersonal(elem){
     if($(elem).is('selected') || $(elem).attr('selected') ){
         $(elem).attr('selected', false);
@@ -112,6 +112,8 @@ function closeSidebar() {
    document.getElementById("my-sidebar").style.display = "none";
     document.getElementById("fondo-sidebar").style.display = "none";
 }
+function generalClose(ref){ $(ref).hide(); }
+function generalShow(ref){ $(ref).show(); }
 function CargarLogin(){
     $("#login").show();
     $("#splash").hide();

@@ -30,6 +30,7 @@
         <input type="button" id="button-crear" class="button-doble success-botton" value="CREAR ACTIVIDAD" (click)="crearTask()">
     </div>
 </div>
+
 <div id="asignar-personal">
     <div class="container-box">
         <label>
@@ -48,6 +49,29 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="tarea-creada" class="background">
+    <div class="container-box">
+        <label>
+            <span class="x-button" onclick="closeTareaCreada()">X</span>    
+        </label>
+        <span class="inner-title">
+            Tarea creada exitosamente!
+        </span>
+    </div>
+</div>
+
+
+<div id="tarea-error" class="background">
+    <div class="container-box">
+        <label>
+            <span class="x-button" onclick="closeHaOcurridoUnError()">X</span>    
+        </label>
+        <span class="inner-title">
+            Por favor complete los datos del formulario para poder realizar esta acción
+        </span>
     </div>
 </div>
 

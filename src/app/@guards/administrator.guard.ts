@@ -31,7 +31,6 @@ export class AdministratorGuard implements CanActivate {
 				if (auth.loggedIn && auth.type === 'administrator')
 					resolve(true);
 				else {
-					this.authentication.redirect();
 					resolve(false);
 				}
 			})		

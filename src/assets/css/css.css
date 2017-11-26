@@ -147,7 +147,14 @@ body, html{
 	height: 100%;
 	background-color: #3c4673;
 }
-#asignar-personal{
+.background{
+	display:none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(88,88,88,0.5);
+}
+#asignar-personal, #tarea-creada{
 	display:none;
 	position: fixed;
 	width: 100%;
@@ -169,6 +176,12 @@ body, html{
 	border-radius: 5px;
 	display: inline-grid;
 	font-family: "AvenirMedium";
+}
+.container-box .inner-title{
+	padding: 10px;
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
 }
 .container-box .input-data{
 	background: transparent;
@@ -444,4 +457,55 @@ text-align: center;
 	min-height: 38px;
     max-height: 260px;
     overflow: scroll;
+}
+
+.assing-no-limits{
+	min-height: 38px;
+    max-height: 75vh;
+    overflow: scroll;
+}
+
+.bottom-border{
+	border-bottom: solid 1px rgba(60, 70, 115, 0.3);
+}
+
+.single-line-13{
+	display: block;
+	display: -webkit-box;
+	min-height: 13px;
+	max-height: 13px;
+	font-size: 13px !important;
+	line-height: 1;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+#detalle-tarea{
+	display:none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(88,88,88,0.5);
+}
+
+.detalle-inner{
+	padding: 20px;
+	max-width: 90vw;
+	max-height: 30vh;
+	overflow: scroll;
+}
+
+.detalle-inner .the-title{
+	font-size: 20px;
+}
+
+.separator{
+	border-bottom: solid 1px rgba(60, 70, 115, 0.3);
+}
+
+.detalle-inner .the-description{
+	text-align: justify;
 }

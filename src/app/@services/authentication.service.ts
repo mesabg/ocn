@@ -39,21 +39,28 @@ export class AuthenticationService {
      *  token:String
      * }
      */
-    public login(username:string, password:string):Promise<string>{
-        return new Promise((resolve, reject) => {
-            this.api.login(username, password)
-                    .subscribe((response:BackendModel) => {
-                        if (response.status === 201){
-                            this.storage.set('token', response.data.token);
-                            this.redirect();
-                            let decodeToken = this.jwt.decodeToken(response.data.token);
-                            resolve(decodeToken.type);
-                        }else {
-                            alert(`Login failed :: \n msg :: ${response.msg} \n data :: ${response.data}`);
-                            reject();
-                        }
-                    });
-        });
+    public async login(username:string, password:string):Promise<string>{
+        try {
+            //-- Manage API login
+            let response = await this.api.login(username, password).toPromise();
+            if (response.state != "success") throw new Error("Loggin failed");
+            await this.storage.set('token', response.data.token);
+            let user = await this.api.getUserData().toPromise();
+
+            //-- Save user
+            await this.storage.set('user', {
+                id: user.data.id,
+                name: user.data.name,
+                photo: user.data.photo,
+                email: user.data.email,
+                password: user.data.password,
+                type: response.data.type
+            });
+
+            return response.data.type; 
+        } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+        }
     };
 
     public logout():void{
@@ -79,125 +86,48 @@ export class AuthenticationService {
 		});
     }
 
-    public isLoggedIn():Promise<{
+    public async isLoggedIn():Promise<{
         loggedIn:boolean,
         type:string
     }>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                let loggedIn = !tokenNotExpired() && token != null && token != undefined;
-                this.getType()
-                .then((type) => {
-                    resolve({
-                        loggedIn: loggedIn,
-                        type: type
-                    });
-                })
-                .catch((reason) => { reject(reason); });
-            })
-            .catch((reason) => {
-                console.log("An error ocurred :: ", reason);
-                reject(reason);
-            });
-        });
+        try {
+            let user:UserModel = await this.storage.get('user');
+            let token = await this.storage.get('token');
+            let loggedIn = !tokenNotExpired() && token != null && token != undefined;
+            return {
+                loggedIn: loggedIn,
+                type: user.type
+            }
+        } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+        }
     }
     
-    public isGeneral():Promise<boolean>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                let decodeToken = this.jwt.decodeToken(token);
-                if (decodeToken.type === 'general'){
-                    resolve(true);
-                    return;
-                }
-                resolve(false);
-            })
-            .catch((reason) => { console.log("An error ocurred :: ", reason); reject(reason); });
-        });
-    }
-
-    public isAdministrator():Promise<boolean>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                let decodeToken = this.jwt.decodeToken(token);
-                if (decodeToken.type === 'administrator'){
-                    resolve(true);
-                    return;
-                }
-                resolve(false);
-            })
-            .catch((reason) => { console.log("An error ocurred :: ", reason); reject(reason); });
-        });
-    }
-
-    public getUsername():Promise<string>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                let decodeToken = this.jwt.decodeToken(token);
-                resolve(decodeToken.username);
-            })
-            .catch((reason) => { console.log("An error ocurred :: ", reason); });
-        });
-    }
-
-    public getUser():Promise<UserModel>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                let decodeToken = this.jwt.decodeToken(token);
-                resolve({
-                    id: decodeToken.id,
-                    name: decodeToken.name,
-                    photo: decodeToken.photo,
-                    email: decodeToken.email,
-                    password: decodeToken.password,
-                    type: decodeToken.type
-                });
-            })
-            .catch((reason) => { console.log("An error ocurred :: ", reason); });
-        });
-    }
-
-    public getType():Promise<string>{
-        return new Promise((resolve, reject) => {
-            this.storage.get('token')
-            .then((token) => {
-                if (token === null || token === undefined) reject(token);
-                let decodeToken = this.jwt.decodeToken(token);
-                resolve(decodeToken.type);
-            })
-            .catch((reason) => { console.log("An error ocurred :: ", reason); });
-        });
-    }
-
-    public redirect():void{
-        
-        this.isLoggedIn()
-        .then((auth) => {
-            if (auth.loggedIn){
-                switch (auth.type) {
-                    case 'general':
-                        this.cta.generalView();
-                        break;
-                    case 'administrator':
-                        this.cta.administratorView();
-                        break;
-                    default:
-                        this.cta.login();
-                        break;
-                }
-            }else{
-                alert('Session is expired');
-                this.cta.login();
-            }
-        })
-        .catch((reason) => {
+    public async isGeneral():Promise<boolean>{
+        try {
+            let user:UserModel = await this.storage.get('user');
+            if (user.type === "employee") return true;
+            return false;
+        } catch (reason) {
             console.log("An error ocurred :: ", reason);
-        });
+        }
+    }
 
+    public async isAdministrator():Promise<boolean>{
+        try {
+            let user:UserModel = await this.storage.get('user');
+            if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor') return true;
+            return false;
+        } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+        }
+    }
+
+    public async getUser():Promise<UserModel>{
+        try {
+            return await this.storage.get('user');
+        } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+        }
     }
 }
