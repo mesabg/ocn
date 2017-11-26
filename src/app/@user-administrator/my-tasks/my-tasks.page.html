@@ -23,7 +23,7 @@
         <div class="container-box">
             <label style="min-height: 25px;">
                 <span style="text-align:left;">Detalle de la tarea:</span>    
-                <span class="x-button" onclick="generalClose('#detalle-tarea')">X</span>    
+                <span class="x-button" (click)="cerrarDescripcion()">X</span>    
             </label>
             <div class="detalle-inner">
                 <p> <i>Título:</i> <br> <strong class="the-title"> data </strong> </p>
@@ -34,10 +34,10 @@
             </div>
         </div>
 
-        <div class="container-box assing">
+        <div class="container-box assing-2">
             <label>Comentarios: </label>
             
-            <!--<div *ngFor="let user of commented" class="header-sidebar">
+            <div *ngFor="let user of commented" class="header-sidebar">
                 <div class="imagen-sidebar">
                     <img  [attr.src]="user.img">
                 </div>
@@ -46,7 +46,7 @@
                     <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ user.name }}</p>
                     <p style="margin-top: -16px;font-size: 13px;">{{ user.comment }}</p>
                 </div>
-            </div>-->
+            </div>
         </div>
 
         <div class="container-box">
@@ -55,6 +55,7 @@
             </textarea>
         </div>
         <div class="botones-box">
+            <input type="button" id="button-volver" class="button-doble back-button red-back" value="FINALIZAR TAREA" (click)="finalizarTarea()">
             <input type="button" id="button-crear" class="button-doble success-botton" value="COMENTAR" (click)="crearComment()" style="float: right;">
         </div>
     </div>

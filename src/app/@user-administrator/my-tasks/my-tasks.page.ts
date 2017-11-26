@@ -17,6 +17,7 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 	//-- Varables
 	public tasks:any[];
 	public comentario:string;
+	public commented:any[] = [];
 
   constructor(
 		private auth:AuthenticationService, 
@@ -67,13 +68,26 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 
 
 	//-- Some functions
-	public desplegarTarea(task:any){
+	public async desplegarTarea(task:any){
 		$('#detalle-tarea').show();
 		$('#detalle-tarea').attr('tarea', JSON.stringify(task));
 		$('.the-title').text(task.title);
 		$('.the-description').text(task.description);
 		$('#the-date').text(task.created_at);
-		console.log("Tarea det :: ", task);
+
+
+		//-- Armar los comentarios
+		this.commented = [];
+		task.comments.forEach( async (com) => {
+			let response = await this.userApi.getUserById(com.user_id);
+			let user = response.data;
+			this.commented.push({
+				name: `${user.name} ${user.lastName}`,
+				comment: com.comment,
+				img: user.photo
+			});
+		});
+
 	}
 
 
@@ -90,9 +104,34 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 		try {
 			let response = await this.taskApi.comment(task.id, this.comentario);
 			if (response.state != "success") throw new Error("API error while saving comment");
+			let user = await this.auth.getUser();
+
+			this.commented.push({
+				name: user.name,
+				comment: this.comentario,
+				img: user.photo
+			});
+
+			this.comentario = "";
 			
 		} catch (reason) {
 			console.log("An error ocurred :: ", reason);
 		}
+	}
+
+	public async finalizarTarea(){
+		try {
+			let task = JSON.parse($('#detalle-tarea').attr('tarea'));
+			let response = await this.taskApi.endTask(task.id);
+			console.log("Status change :: ", response);
+		} catch (reason) {
+			console.log("An error ocurred :: ", reason);
+		}
+	}
+
+	public cerrarDescripcion(){
+		$('#detalle-tarea').hide();
+		this.commented = [];
+		this.comentario = "";
 	}
 }

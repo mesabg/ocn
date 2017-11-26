@@ -509,3 +509,14 @@ text-align: center;
 .detalle-inner .the-description{
 	text-align: justify;
 }
+
+.assing-2{
+	min-height: 38px;
+    max-height: 22vh;
+    overflow: scroll;
+}
+
+.red-back{
+	background-color: #610B0B;
+	color: white;
+}

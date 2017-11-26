@@ -67,4 +67,26 @@ export class TaskApi {
 			.map(response => response.json())
 			.toPromise();
 	}
+
+
+
+	/**
+	 * Change status
+	 * /tasks/change-status
+	 * status
+	 */
+	public async changeStatus(id:any, status:string):Promise<BackendModel>{
+		return this.apiService
+			.authPut(`tasks/change-status/${id}`, {
+				status: status
+			})
+			.map(response => response.json())
+			.toPromise();
+	}
+
+
+	//-- End task
+	public async endTask(id:any):Promise<BackendModel>{
+		return this.changeStatus(id, 'Finalizada');
+	}
 }

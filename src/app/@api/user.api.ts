@@ -83,4 +83,16 @@ export class UserApi {
 			.authGet('users')
 			.map(response => response.json());
 	}
+
+
+
+	/**
+	 * Get user data by id
+	 */
+	public async getUserById(id):Promise<BackendModel>{
+		return this.apiService
+			.authGet(`users/${id}`)
+			.map(response => response.json())
+			.toPromise();
+	}
 }
