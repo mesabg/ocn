@@ -95,4 +95,16 @@ export class UserApi {
 			.map(response => response.json())
 			.toPromise();
 	}
+
+
+
+	/**
+	 * Post photo
+	 */
+	public async postPhoto(picture:any):Promise<BackendModel>{
+		return this.apiService
+			.authPostFormLike(`photo`, picture)
+			.map(response => response.json())
+			.toPromise();
+	}
 }

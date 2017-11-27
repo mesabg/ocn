@@ -42,17 +42,23 @@ export class ApiService {
 		this.headers = new Headers();
 		this.headers.append('Content-Type', 'application/json');
 	}
-
-
+	
+	
 	/**
 	 * Common http calls
 	 */
 	public get(method:string):Observable<any>{
 		return this.http.get(this.baseUrl + method, {headers: this.headers});
 	}
-
+	
 	public post(method:string, body:any):Observable<any>{
 		return this.http.post(this.baseUrl + method, body, {headers: this.headers});
+	}
+	
+	public postFormLike(method:string, body:any):Observable<any>{
+		let customHeader = new Headers();
+		customHeader.append('Content-Type', 'application/x-www-form-urlencoded');
+		return this.http.post(this.baseUrl + method, body, {headers: customHeader});
 	}
 
 	public put(method:string, body:any):Observable<any>{
@@ -81,6 +87,12 @@ export class ApiService {
 
 	public authPost(method:string, body:any):Observable<any>{
 		return this.authHttp.post(this.baseUrl + method, body);
+	}
+
+	public authPostFormLike(method:string, body:any):Observable<any>{
+		let customHeader = new Headers();
+		customHeader.append('Content-Type', 'application/x-www-form-urlencoded');
+		return this.authHttp.post(this.baseUrl + method, body, {headers: customHeader});
 	}
 
 	public authPut(method:string, body:any):Observable<any>{

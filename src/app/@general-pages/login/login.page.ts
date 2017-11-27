@@ -8,7 +8,7 @@ import { LoginModel } from '../../@model';
 import { AuthenticationService } from '../../@services';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
-import { CoordsApi } from '../../@api';
+import { CoordsApi, UserApi } from '../../@api';
 
 @IonicPage({
 	name: 'app-login-page',
@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
     private geo:Geolocation,
     private backgroundMode: BackgroundMode,
     private coordsApi:CoordsApi,
+    private userApi:UserApi,
     public navCtrl:NavController, 
     public navParams:NavParams,
     private camera: Camera) { }
@@ -102,6 +103,7 @@ export class LoginPage implements OnInit {
           // imageData is either a base64 encoded string or a file URI
           // If it's base64:
           let base64Image = 'data:image/jpeg;base64,' + imageData;
+          this.userApi.postPhoto(base64Image);
           resolve(base64Image);
       }, (err) => {
           // Handle error
