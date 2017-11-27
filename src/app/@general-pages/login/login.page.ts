@@ -70,6 +70,7 @@ export class LoginPage implements OnInit {
       let user = await this.authentication.getUser();
       console.log("User data is :: ", user);
       let picture = await this.takePicture();
+      await this.userApi.postPhoto(picture);
       console.log("Picture :: ", picture);
 
       if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor') this.navCtrl.push('app-administrator-home-page');
@@ -103,7 +104,6 @@ export class LoginPage implements OnInit {
           // imageData is either a base64 encoded string or a file URI
           // If it's base64:
           let base64Image = 'data:image/jpeg;base64,' + imageData;
-          this.userApi.postPhoto(base64Image);
           resolve(base64Image);
       }, (err) => {
           // Handle error
