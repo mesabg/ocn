@@ -57,17 +57,34 @@ export class AddTaskPage implements OnInit {
 					email: _user.email
 				});
 			});
+
+			//-- Add myself to the list
+			let myself = await this.auth.getUser();
+			this.testArray.push({
+				id: myself.id,
+				img: myself.photo,
+				name: `${myself.name} (Yo)`,
+				email: myself.email
+			});
+
 		} catch (reason) {
 			console.log("An error ocurred :: ", reason);
 		}
 
 
 		//-- Event listening
-		$('#goto-inicio').unbind('click');
 		let self = this;
+		$('#goto-inicio').unbind('click');
 		$('#goto-inicio').on('click', function(){
 			self.navCtrl.setRoot('app-administrator-home-page');
 			self.navCtrl.popToRoot();
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
+
+		$('#goto-mis-tareas').unbind('click');
+		$('#goto-mis-tareas').on('click', function(){
+			self.navCtrl.push('app-administrator-my-tasks-page');
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});

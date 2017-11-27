@@ -123,6 +123,13 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 		try {
 			let task = JSON.parse($('#detalle-tarea').attr('tarea'));
 			let response = await this.taskApi.endTask(task.id);
+
+			let res = this.tasks.indexOf(task);
+			if (res == -1) {}
+			else this.tasks.splice(res, 1);
+
+			$('#detalle-tarea').hide();
+
 			console.log("Status change :: ", response);
 		} catch (reason) {
 			console.log("An error ocurred :: ", reason);

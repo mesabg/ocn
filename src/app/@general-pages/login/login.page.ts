@@ -6,8 +6,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 //-- Local imports
 import { LoginModel } from '../../@model';
 import { AuthenticationService } from '../../@services';
-
-
+import { Geolocation } from '@ionic-native/geolocation';
+import { BackgroundMode } from '@ionic-native/background-mode';
+import { CoordsApi } from '../../@api';
 
 @IonicPage({
 	name: 'app-login-page',
@@ -24,12 +25,17 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     private authentication:AuthenticationService,
+    private geo:Geolocation,
+    private backgroundMode: BackgroundMode,
+    private coordsApi:CoordsApi,
     public navCtrl:NavController, 
     public navParams:NavParams,
     private camera: Camera) { }
 
   async ngOnInit() { 
     this.createForm(); 
+    //-- prevents the app from being paused while in background.
+    this.backgroundMode.enable();
 
     try {
       let auth = await this.authentication.isLoggedIn();
@@ -38,6 +44,18 @@ export class LoginPage implements OnInit {
           this.navCtrl.push('app-administrator-home-page');
         else if (auth.type === 'employee') 
           this.navCtrl.push('app-general-home-page');
+
+        //-- Start process sending the coords
+        let self = this;
+        setInterval(async function(){
+          try {
+            let resp = await self.geo.getCurrentPosition();
+            let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+            console.log("Api response for coords :: ", apiResponse);
+          } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+          }
+        }, /*180000*/ 500);
       }
     } catch (reason) {
       console.log("An error ocurred :: ", reason);

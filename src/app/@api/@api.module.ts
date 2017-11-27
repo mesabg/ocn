@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ApiModule as MsApiModule } from '../../@ms/api';
 import { UserApi } from './user.api';
 import { TaskApi } from './task.api';
+import { CoordsApi } from './coords.api';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { TaskApi } from './task.api';
   ],
   providers:[
     UserApi,
-    TaskApi
+    TaskApi,
+    CoordsApi
   ]
 })
 export class ApiModule { }

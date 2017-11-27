@@ -25,7 +25,15 @@ export class HomePage implements OnInit, AfterViewInit {
 		let user = await this.auth.getUser();
         $('#user-image').attr('src', user.photo);
         $('#user-name').text(user.name);
-        $('#user-email').text(user.email);
+		$('#user-email').text(user.email);
+		
+		let self = this;
+		$('#goto-mis-tareas').unbind('click');
+		$('#goto-mis-tareas').on('click', function(){
+			self.navCtrl.push('app-administrator-my-tasks-page');
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
 	}
 
 
