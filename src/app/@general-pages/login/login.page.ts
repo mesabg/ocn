@@ -68,10 +68,9 @@ export class LoginPage implements OnInit {
     try {
       await this.authentication.login(loginData.username, loginData.password);
       let user = await this.authentication.getUser();
-      console.log("User data is :: ", user);
-      let picture = await this.takePicture();
-      await this.userApi.postPhoto(picture);
-      console.log("Picture :: ", picture);
+      //let picture = await this.takePicture();
+      //await this.userApi.postPhoto(picture);
+      //console.log("Picture :: ", picture);
 
       if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor') this.navCtrl.push('app-administrator-home-page');
       else if (user.type === 'employee') this.navCtrl.push('app-general-home-page');
