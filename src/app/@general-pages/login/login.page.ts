@@ -41,31 +41,8 @@ export class LoginPage implements OnInit {
     try {
       let auth = await this.authentication.isLoggedIn();
       if (auth.loggedIn){
-        if (auth.type === 'administrator' || auth.type === 'root' || auth.type === 'supervisor' || auth.type === 'employee'){
-          this.navCtrl.setRoot('app-administrator-home-page');
-          this.navCtrl.popToRoot();
-        }
-
-        //-- Start process sending the coords
-        let self = this;
-        let resp = await self.geo.getCurrentPosition();
-        let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-
-        if (apiResponse.state == "success"){
-          //-- Send coords programmed
-
-          setInterval(async function(){
-            try {
-              let resp = await self.geo.getCurrentPosition();
-              let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-              console.log("Api response for coords :: ", apiResponse);
-            } catch (reason) {
-              console.log("An error ocurred :: ", reason);
-            }
-          }, 10000);
-
-        }
-
+        this.navCtrl.setRoot('app-jornada-page');
+        this.navCtrl.popToRoot();
       }else{
         throw new Error("Not logged in");
       }
@@ -79,64 +56,12 @@ export class LoginPage implements OnInit {
     try {
       let logged = await this.authentication.login(loginData.username, loginData.password);
       if (logged == "not-logged-in") throw new Error("User authentication failed");
-      let user = await this.authentication.getUser();
-      let picture = await this.takePicture();
-      await this.userApi.postPhoto(picture);
-
-      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor' || user.type === 'employee'){
-        this.navCtrl.setRoot('app-administrator-home-page');
-        this.navCtrl.popToRoot();
-      }
-
-
-      //-- Start process sending the coords
-      let self = this;
-      let resp = await self.geo.getCurrentPosition();
-      let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-
-      if (apiResponse.state == "success"){
-        //-- Send coords programmed
-
-        setInterval(async function(){
-          try {
-            let resp = await self.geo.getCurrentPosition();
-            let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-            console.log("Api response for coords :: ", apiResponse);
-          } catch (reason) {
-            console.log("An error ocurred :: ", reason);
-          }
-        }, 10000);
-
-      }
-
-
+      this.navCtrl.setRoot('app-jornada-page');
+      this.navCtrl.popToRoot();
     } catch (reason) {
       console.log("Error on submit (login) :: ", reason);
     }
   }
-
-
-  //-- Picture
-  public takePicture():Promise<any>{
-    const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
-    }
-    return new Promise((reject, resolve) => {
-      this.camera.getPicture(options).then((imageData) => {
-          // imageData is either a base64 encoded string or a file URI
-          // If it's base64:
-          let base64Image = 'data:image/jpeg;base64,' + imageData;
-          resolve(base64Image);
-      }, (err) => {
-          // Handle error
-          reject(err);
-      });
-    });
-  }
-
 
   //-- Actions
   createForm(){

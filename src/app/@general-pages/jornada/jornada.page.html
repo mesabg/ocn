@@ -1,0 +1,20 @@
+
+<div id="login" class="Login" style="top: 0; display:initial;">
+<div class="row login-image">
+    <img src="assets/img/icon-carrito.png">
+</div>
+<div class="row Login-Superior">
+    <p>
+        <strong>SGP</strong>
+        <br>
+        Sistema de gestión de personal
+    </p>
+</div>
+<div class="row" style="margin: 0 auto;">
+    <div class="login-entry" style="margin: 0 auto;">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" novalidate>            
+            <input type="submit" id="button-login" class="button-login" value="INICIAR JORNADA">
+        </form>
+    </div>
+</div>
+</div>
