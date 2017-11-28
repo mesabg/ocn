@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../@services';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { CoordsApi, UserApi } from '../../@api';
+import $ from 'jquery';
 
 @IonicPage({
 	name: 'app-login-page',
@@ -19,7 +20,7 @@ import { CoordsApi, UserApi } from '../../@api';
   templateUrl: './login.page.html',
   encapsulation: ViewEncapsulation.None
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, AfterViewInit {
   public loginForm:FormGroup;
 
   constructor(
@@ -49,6 +50,15 @@ export class LoginPage implements OnInit {
     } catch (reason) {
       console.log("An error ocurred :: ", reason);
     }
+  }
+
+  ngAfterViewInit(){
+    $('#content-app').css('top', '0px');
+    $("#splash").show();
+    setTimeout(function() {
+        $("#splash").hide();
+        $('#login').show();
+    }, 1000); //splash a la fuerza 1 seg
   }
 
   //-- OnSubmit funcionallity

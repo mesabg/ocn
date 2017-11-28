@@ -66,16 +66,17 @@ export class TasksHistoryPage implements OnInit {
 
 
 		$('#goto-logout').unbind('click');
-		$('#goto-logout').on('click', function(){
+		$('#goto-logout').on('click', async function(){
 			self.navCtrl.setRoot('app-login-page');
 			self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
+			await self.auth.logout();
 		});
 
 		$('#goto-finalizar').unbind('click');
 		$('#goto-finalizar').on('click', function(){
-			self.navCtrl.setRoot('app-login-page');
+			self.navCtrl.setRoot('app-jornada-page');
 			self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";

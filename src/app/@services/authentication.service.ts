@@ -65,8 +65,14 @@ export class AuthenticationService {
         }
     };
 
-    public logout():void{
-        this.api.logout()
+    public async logout(){
+        try {
+            await this.storage.remove('token');
+            await this.storage.remove('user');
+        } catch (reason) {
+            console.log("An error ocurred on logout", reason);
+        }
+        /*this.api.logout()
 				.subscribe((response:BackendModel) => {
 					if (response.data === 200) {
                         this.storage.remove('token');
@@ -74,7 +80,7 @@ export class AuthenticationService {
                         this.cta.login();
                     } else
 						alert(`Login failed :: \n msg :: ${response.msg} \n data :: ${response.data}`);
-				});
+				});*/
     };
 
     public register(user:UserModel):void{

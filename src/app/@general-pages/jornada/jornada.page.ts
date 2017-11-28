@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../@services';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { CoordsApi, UserApi } from '../../@api';
+import $ from 'jquery';
 
 @IonicPage({
 	name: 'app-jornada-page',
@@ -19,7 +20,7 @@ import { CoordsApi, UserApi } from '../../@api';
   templateUrl: './jornada.page.html',
   encapsulation: ViewEncapsulation.None
 })
-export class JornadaPage implements OnInit {
+export class JornadaPage implements OnInit, AfterViewInit {
   public loginForm:FormGroup;
 
   constructor(
@@ -47,6 +48,10 @@ export class JornadaPage implements OnInit {
     }
   }
 
+  ngAfterViewInit(){
+    $('#content-app').css('top', '0px');
+  }
+
 
   public async process(){
     try {
@@ -63,9 +68,15 @@ export class JornadaPage implements OnInit {
         //-- Start process sending the coords
         let self = this;
         let resp = await self.geo.getCurrentPosition();
-        let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+
+        let apiResponse = { state:"success" };
+        try {
+          let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+        } catch (_photo) {
+            console.log("Not throw error, picture error");
+        }
     
-        if (apiResponse.state == "success"){
+        //if (apiResponse.state == "success"){
           //-- Send coords programmed
     
           setInterval(async function(){
@@ -78,7 +89,7 @@ export class JornadaPage implements OnInit {
             }
           }, 300000);
     
-        }
+        //}
     
         this.navCtrl.setRoot('app-administrator-home-page');
         this.navCtrl.popToRoot();
