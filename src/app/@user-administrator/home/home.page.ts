@@ -14,6 +14,9 @@ import { AuthenticationService } from '../../@services';
   encapsulation: ViewEncapsulation.None
 })
 export class HomePage implements OnInit, AfterViewInit {
+
+	public isAdmin:Boolean = false;
+
   constructor(private auth:AuthenticationService, public navCtrl:NavController, public navParams:NavParams) { }
 	ngOnInit() { }
 	ionViewDidLoad(){ }
@@ -26,6 +29,9 @@ export class HomePage implements OnInit, AfterViewInit {
         $('#user-image').attr('src', user.photo);
         $('#user-name').text(user.name);
 		$('#user-email').text(user.email);
+
+		if (user.type != 'employee') 
+			this.isAdmin = true;
 		
 		let self = this;
 		$('#goto-mis-tareas').unbind('click');

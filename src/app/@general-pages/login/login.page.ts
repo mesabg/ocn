@@ -41,22 +41,33 @@ export class LoginPage implements OnInit {
     try {
       let auth = await this.authentication.isLoggedIn();
       if (auth.loggedIn){
-        if (auth.type === 'administrator' || auth.type === 'root' || auth.type === 'supervisor') 
-          this.navCtrl.push('app-administrator-home-page');
-        else if (auth.type === 'employee') 
-          this.navCtrl.push('app-general-home-page');
+        if (auth.type === 'administrator' || auth.type === 'root' || auth.type === 'supervisor' || auth.type === 'employee'){
+          this.navCtrl.setRoot('app-administrator-home-page');
+          this.navCtrl.popToRoot();
+        }
 
         //-- Start process sending the coords
         let self = this;
-        setInterval(async function(){
-          try {
-            let resp = await self.geo.getCurrentPosition();
-            let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-            console.log("Api response for coords :: ", apiResponse);
-          } catch (reason) {
-            console.log("An error ocurred :: ", reason);
-          }
-        }, /*180000*/ 500);
+        let resp = await self.geo.getCurrentPosition();
+        let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+
+        if (apiResponse.state == "success"){
+          //-- Send coords programmed
+
+          setInterval(async function(){
+            try {
+              let resp = await self.geo.getCurrentPosition();
+              let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+              console.log("Api response for coords :: ", apiResponse);
+            } catch (reason) {
+              console.log("An error ocurred :: ", reason);
+            }
+          }, 10000);
+
+        }
+
+      }else{
+        throw new Error("Not logged in");
       }
     } catch (reason) {
       console.log("An error ocurred :: ", reason);
@@ -71,31 +82,37 @@ export class LoginPage implements OnInit {
       let user = await this.authentication.getUser();
       let picture = await this.takePicture();
       await this.userApi.postPhoto(picture);
-      //console.log("Picture :: ", picture);
 
-      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor'){
+      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor' || user.type === 'employee'){
         this.navCtrl.setRoot('app-administrator-home-page');
         this.navCtrl.popToRoot();
-        //this.navCtrl.push('app-administrator-home-page');
       }
-      else if (user.type === 'employee'){
-        this.navCtrl.setRoot('app-general-home-page');
-        this.navCtrl.popToRoot();
-        //this.navCtrl.push('app-general-home-page');
+
+
+      //-- Start process sending the coords
+      let self = this;
+      let resp = await self.geo.getCurrentPosition();
+      let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+
+      if (apiResponse.state == "success"){
+        //-- Send coords programmed
+
+        setInterval(async function(){
+          try {
+            let resp = await self.geo.getCurrentPosition();
+            let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+            console.log("Api response for coords :: ", apiResponse);
+          } catch (reason) {
+            console.log("An error ocurred :: ", reason);
+          }
+        }, 10000);
+
       }
+
+
     } catch (reason) {
       console.log("Error on submit (login) :: ", reason);
     }
-
-    /*.then((usertype) => {
-      this.takePicture()
-      .then((picture) => {
-        console.log("Picture :: ", picture);
-        if (usertype === 'administrator' || usertype === 'root' || usertype === 'supervisor') this.navCtrl.push('app-administrator-home-page');
-        else if (usertype === 'employee') this.navCtrl.push('app-general-home-page');
-      })
-      .catch((err) => { });
-    });*/
   }
 
 

@@ -12,13 +12,13 @@
             <h2>Mis Tareas</h2>
         </div>
     </div>
-    <div class="opcion-menu-principal" (click)="activeTask()">
+    <div *ngIf="isAdmin" class="opcion-menu-principal" (click)="activeTask()">
         <div class="contenido">
             <img src="assets/img/iconos/tareas_activas.png">
             <h2>Tareas Activas</h2>
         </div>
     </div>
-    <div class="opcion-menu-principal" (click)="tasksHistory()">
+    <div *ngIf="isAdmin" class="opcion-menu-principal" (click)="tasksHistory()">
         <div class="contenido">
             <img src="assets/img/iconos/historial_tareas.png">
             <h2>Historial de Tareas</h2>
