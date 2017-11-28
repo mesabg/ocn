@@ -47,7 +47,7 @@ export class TaskApi {
 	 */
 	public async retrieveAll():Promise<BackendModel>{
 		return this.apiService
-			.authGet(`tasks`)
+			.authGet(`active-tasks`)
 			.map(response => response.json())
 			.toPromise();
 	}
@@ -103,7 +103,7 @@ export class TaskApi {
 	 */
 	public async getActiveTask():Promise<BackendModel>{
 		return this.apiService
-		.authGet(`active-tasks`)
+		.authGet(`tasks`)
 		.map(response => response.json())
 		.toPromise();
 	}
