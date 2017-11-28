@@ -70,7 +70,7 @@ export class LoginPage implements OnInit {
       if (logged == "not-logged-in") throw new Error("User authentication failed");
       let user = await this.authentication.getUser();
       let picture = await this.takePicture();
-      //await this.userApi.postPhoto(picture);
+      await this.userApi.postPhoto(picture);
       //console.log("Picture :: ", picture);
 
       if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor'){
