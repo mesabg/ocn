@@ -43,7 +43,7 @@ export class AuthenticationService {
         try {
             //-- Manage API login
             let response = await this.api.login(username, password).toPromise();
-            if (response.state != "success") throw new Error("Loggin failed");
+            if (response.state != "success") throw new Error("Login failed");
             await this.storage.set('token', response.data.token);
             let user = await this.api.getUserData().toPromise();
 
@@ -60,6 +60,8 @@ export class AuthenticationService {
             return response.data.type; 
         } catch (reason) {
             console.log("An error ocurred :: ", reason);
+            alert("Error al iniciar sesión");
+            return "not-logged-in";
         }
     };
 
@@ -91,15 +93,20 @@ export class AuthenticationService {
         type:string
     }>{
         try {
-            let user:UserModel = await this.storage.get('user');
             let token = await this.storage.get('token');
             let loggedIn = !tokenNotExpired() && token != null && token != undefined;
+            if (!loggedIn) throw new Error("User is not logged in");
+            let user:UserModel = await this.storage.get('user');
             return {
                 loggedIn: loggedIn,
                 type: user.type
             }
         } catch (reason) {
-            console.log("An error ocurred :: ", reason);
+            console.log("An error ocurred here (while checking isLoggedIn) :: ", reason);
+            return {
+                loggedIn: false,
+                type: null
+            };
         }
     }
     

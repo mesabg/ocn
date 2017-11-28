@@ -66,16 +66,25 @@ export class LoginPage implements OnInit {
   //-- OnSubmit funcionallity
   public async onSubmit(loginData:LoginModel){
     try {
-      await this.authentication.login(loginData.username, loginData.password);
+      let logged = await this.authentication.login(loginData.username, loginData.password);
+      if (logged == "not-logged-in") throw new Error("User authentication failed");
       let user = await this.authentication.getUser();
-      //let picture = await this.takePicture();
+      let picture = await this.takePicture();
       //await this.userApi.postPhoto(picture);
       //console.log("Picture :: ", picture);
 
-      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor') this.navCtrl.push('app-administrator-home-page');
-      else if (user.type === 'employee') this.navCtrl.push('app-general-home-page');
+      if (user.type === 'administrator' || user.type === 'root' || user.type === 'supervisor'){
+        this.navCtrl.setRoot('app-administrator-home-page');
+        this.navCtrl.popToRoot();
+        //this.navCtrl.push('app-administrator-home-page');
+      }
+      else if (user.type === 'employee'){
+        this.navCtrl.setRoot('app-general-home-page');
+        this.navCtrl.popToRoot();
+        //this.navCtrl.push('app-general-home-page');
+      }
     } catch (reason) {
-      console.log("Error on submit :: ", reason);
+      console.log("Error on submit (login) :: ", reason);
     }
 
     /*.then((usertype) => {
