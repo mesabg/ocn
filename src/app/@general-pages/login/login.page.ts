@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
     try {
       await this.authentication.login(loginData.username, loginData.password);
       let user = await this.authentication.getUser();
-      let picture = await this.takePicture();
+      //let picture = await this.takePicture();
       //await this.userApi.postPhoto(picture);
       //console.log("Picture :: ", picture);
 
