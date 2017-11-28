@@ -32,11 +32,30 @@ export class HomePage implements OnInit, AfterViewInit {
 
 		if (user.type != 'employee') 
 			this.isAdmin = true;
+
+			
 		
 		let self = this;
 		$('#goto-mis-tareas').unbind('click');
 		$('#goto-mis-tareas').on('click', function(){
 			self.navCtrl.push('app-administrator-my-tasks-page');
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
+
+
+		$('#goto-logout').unbind('click');
+		$('#goto-logout').on('click', function(){
+			self.navCtrl.setRoot('app-login-page');
+			self.navCtrl.popToRoot();
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
+
+		$('#goto-finalizar').unbind('click');
+		$('#goto-finalizar').on('click', function(){
+			self.navCtrl.setRoot('app-login-page');
+			self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});

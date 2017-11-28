@@ -62,6 +62,22 @@ export class ActiveTasksPage implements OnInit {
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});
+
+		$('#goto-logout').unbind('click');
+		$('#goto-logout').on('click', function(){
+			self.navCtrl.setRoot('app-login-page');
+			self.navCtrl.popToRoot();
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
+
+		$('#goto-finalizar').unbind('click');
+		$('#goto-finalizar').on('click', function(){
+			self.navCtrl.setRoot('app-login-page');
+			self.navCtrl.popToRoot();
+			document.getElementById("my-sidebar").style.display = "none";
+			document.getElementById("fondo-sidebar").style.display = "none";
+		});
 	}
 
 	ionViewDidLoad(){ }
