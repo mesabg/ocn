@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
-import { Angular2TokenService } from 'angular2-token';
 import $ from 'jquery';
 
 /**
@@ -44,8 +43,7 @@ export class ApiService {
 	constructor(
 		protected http:Http, 
 		protected authHttp:AuthHttp, 
-		protected storage:Storage,
-		private tokenService: Angular2TokenService) {
+		protected storage:Storage) {
 		this.headers = new Headers();
 		this.headers.append('Content-Type', 'application/json');
 	}

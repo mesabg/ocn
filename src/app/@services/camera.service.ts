@@ -1,15 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { NavController, ActionSheetController, ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
-import { File as IonicFile } from '@ionic-native/file';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { FilePath } from '@ionic-native/file-path';
+import { Platform } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import $ from 'jquery';
 
 @Injectable()
 export class CameraService {
-    lastImage: string = null;
-    loading: Loading;
 
     constructor(
         private camera: Camera,
