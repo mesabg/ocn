@@ -64,12 +64,21 @@ export class LoginPage implements OnInit, AfterViewInit {
   //-- OnSubmit funcionallity
   public async onSubmit(loginData:LoginModel){
     try {
+      console.log("Before login ", loginData);
       let logged = await this.authentication.login(loginData.username, loginData.password);
       if (logged == "not-logged-in") throw new Error("User authentication failed");
       this.navCtrl.setRoot('app-jornada-page');
       this.navCtrl.popToRoot();
     } catch (reason) {
       console.log("Error on submit (login) :: ", reason);
+    }
+  }
+
+  public fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        this.userApi.postCameraPhoto(file);
     }
   }
 

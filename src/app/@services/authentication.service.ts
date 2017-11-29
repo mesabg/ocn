@@ -65,6 +65,14 @@ export class AuthenticationService {
         }
     };
 
+    public async getToken(){
+        try {
+            return await this.storage.remove('token');
+        } catch (reason) {
+            console.log("An error ocurred on getting token", reason);
+        }
+    }
+
     public async logout(){
         try {
             await this.storage.remove('token');

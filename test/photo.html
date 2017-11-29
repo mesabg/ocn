@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Testing HTML sending photo</title>
+</head>
+<body>
+    <form id="main-form" enctype="multipart/form-data">
+        <input name="image" type="file" />
+        <input type="submit" value="Upload Damm File"/>
+    </form>
+    <progress></progress>
+
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#main-form').on('submit', function(event) {
+                event.preventDefault();
+                console.log("Sending file...");
+
+                //-- Prepare form data
+                var form = new FormData($(this)[0]);
+               console.log("Image :: ", form.get('image'));
+
+                $.ajax({
+                    // Your server script to process the upload
+                    url: 'http://sgp.uy/api/photo',
+                    type: 'POST',
+    
+                    // Form data
+                    data: form,
+    
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    crossDomain: true,
+    
+                    // Custom XMLHttpRequest
+                    xhr: function() {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            // For handling the progress of the upload
+                            myXhr.upload.addEventListener('progress', function(e) {
+                                if (e.lengthComputable) {
+                                    $('progress').attr({
+                                        value: e.loaded,
+                                        max: e.total,
+                                    });
+                                }
+                            } , false);
+                        }
+                        return myXhr;
+                    },
+    
+                    success: function(data, textStatus, jqXHR){
+                        console.log("Exito :: ", data);
+                    },
+                    error: function(error){
+                        console.log("Error :: ", error);
+                    }
+                });
+            });  
+
+        });
+    </script>
+</body>
+</html>

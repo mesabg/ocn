@@ -7,6 +7,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
+import { Angular2TokenService } from 'angular2-token';
 
 /**
  * Local imports
@@ -36,6 +37,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
 	],
 	providers: [
 		ApiService,
+		Angular2TokenService,
 		{
 			provide: AuthHttp,
 			useFactory: authHttpServiceFactory,

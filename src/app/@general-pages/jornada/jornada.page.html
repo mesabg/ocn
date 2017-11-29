@@ -12,9 +12,11 @@
 </div>
 <div class="row" style="margin: 0 auto;">
     <div class="login-entry" style="margin: 0 auto;">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" novalidate>            
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" novalidate>         
+            <input id="read-file" type="file" name="image" style="opacity:0;">   
             <input type="submit" id="button-login" class="button-login" value="INICIAR JORNADA">
         </form>
     </div>
 </div>
 </div>
+

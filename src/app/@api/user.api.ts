@@ -107,4 +107,12 @@ export class UserApi {
 			.map(response => response.json())
 			.toPromise();
 	}
+
+
+	/**
+	 * Post photo
+	 */
+	public async postCameraPhoto(picture:File):Promise<BackendModel>{
+		return this.apiService.authPostMultipart(`photo`, picture);
+	}
 }

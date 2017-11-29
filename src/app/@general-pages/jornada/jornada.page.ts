@@ -5,7 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 //-- Local imports
 import { LoginModel } from '../../@model';
-import { AuthenticationService } from '../../@services';
+import { AuthenticationService, CameraService } from '../../@services';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { CoordsApi, UserApi } from '../../@api';
@@ -32,7 +32,7 @@ export class JornadaPage implements OnInit, AfterViewInit {
     private userApi:UserApi,
     public navCtrl:NavController, 
     public navParams:NavParams,
-    private camera: Camera) { }
+    private camera:CameraService) { }
 
   async ngOnInit() { 
     this.createForm(); 
@@ -48,6 +48,11 @@ export class JornadaPage implements OnInit, AfterViewInit {
     }
   }
 
+  performClick(elemId) {
+    document.getElementById(elemId).click();
+ }
+
+
   ngAfterViewInit(){
     $('#content-app').css('top', '0px');
   }
@@ -57,28 +62,16 @@ export class JornadaPage implements OnInit, AfterViewInit {
     try {
         
         let user = await this.authentication.getUser();
-        let picture = await this.takePicture();
-
-        try {
-            await this.userApi.postPhoto(picture);
-        } catch (_photo) {
-            console.log("Not throw error, picture error");
-        }
+        let picture:File = await this.camera.takePicture();
+        let photoResponse = await this.userApi.postCameraPhoto(picture);
+        if (photoResponse.state != "success") throw new Error("Photo is not save");
     
         //-- Start process sending the coords
         let self = this;
         let resp = await self.geo.getCurrentPosition();
-
-        let apiResponse = { state:"success" };
-        try {
-          let apiResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
-        } catch (_photo) {
-            console.log("Not throw error, picture error");
-        }
-    
-        //if (apiResponse.state == "success"){
+        let coordsResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
+        if (coordsResponse.state == "success"){
           //-- Send coords programmed
-    
           setInterval(async function(){
             try {
               let resp = await self.geo.getCurrentPosition();
@@ -88,12 +81,13 @@ export class JornadaPage implements OnInit, AfterViewInit {
               console.log("An error ocurred :: ", reason);
             }
           }, 300000);
+        }else{
+          throw new Error("Coords are not save");
+        }
     
-        //}
-    
+
         this.navCtrl.setRoot('app-administrator-home-page');
         this.navCtrl.popToRoot();
-
     } catch (reason) {
         console.log("An error ocurred :: ", reason);
     }
@@ -105,26 +99,13 @@ export class JornadaPage implements OnInit, AfterViewInit {
         this.process();
     }
 
-
-  //-- Picture
-  public takePicture():Promise<any>{
-    const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
+  public async fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        let response = await this.userApi.postCameraPhoto(file);
+        console.log("Server response :: ", response);
     }
-    return new Promise((reject, resolve) => {
-      this.camera.getPicture(options).then((imageData) => {
-          // imageData is either a base64 encoded string or a file URI
-          // If it's base64:
-          let base64Image = 'data:image/jpeg;base64,' + imageData;
-          resolve(base64Image);
-      }, (err) => {
-          // Handle error
-          reject(err);
-      });
-    });
   }
 
 

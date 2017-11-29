@@ -6,6 +6,9 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
+import { Storage } from '@ionic/storage';
+import { Angular2TokenService } from 'angular2-token';
+import $ from 'jquery';
 
 /**
  * Environment Import
@@ -38,7 +41,11 @@ export class ApiService {
 	protected socket:SocketIO;
 	protected baseConnection:string = environment.SOCKET.get();
 
-	constructor(protected http:Http, protected authHttp:AuthHttp) {
+	constructor(
+		protected http:Http, 
+		protected authHttp:AuthHttp, 
+		protected storage:Storage,
+		private tokenService: Angular2TokenService) {
 		this.headers = new Headers();
 		this.headers.append('Content-Type', 'application/json');
 	}
@@ -93,6 +100,65 @@ export class ApiService {
 		let customHeader = new Headers();
 		customHeader.append('Content-Type', 'application/x-www-form-urlencoded');
 		return this.authHttp.post(this.baseUrl + method, body, {headers: customHeader});
+	}
+
+	public async authPostMultipart(method:string, file:File):Promise<any>{
+
+		/*let headers_ = this.tokenService.currentAuthHeaders;
+		console.log("Headers_", headers_.get('Authorization'));
+		let formData:FormData = new FormData();
+        formData.append('name', 'Moisés');
+		formData.append('image', file, file.name);
+		let customHeader = new Headers();
+		customHeader.append('Authorization', `Bearer ${await this.storage.get('token')}`);
+		//customHeader.append('Content-Type', 'multipart/form-data');
+		return this.http
+			.post(this.baseUrl + method, formData , { headers: customHeader })
+			.map(response => response.json())
+			.toPromise();*/
+
+
+		return new Promise(async (resolve, reject) => {
+			try {
+				//-- Prepare form
+				let form = new FormData();
+				form.append('image', file);
+	
+				//-- Get token
+				let token = await this.storage.get('token');
+				if (token == null || token == undefined) 
+					throw new Error("Token is not set");
+
+				//-- Prepare jquery AJAX request
+				$.ajax({
+					url: this.baseUrl + method,
+					type: 'POST',
+	
+					// Form data
+					data: form,
+	
+					cache: false,
+					contentType: false,
+					processData: false,
+					crossDomain: true,
+
+					headers: {
+						'Authorization': `Bearer ${token}`
+					},
+	
+					success: function(data, textStatus, jqXHR){
+						resolve(data);
+					},
+					error: function(err){
+						throw new Error(err);
+					}
+				});
+				
+			} catch (reason) {
+				console.log("An error ocurred");
+				reject(reason);
+			}
+		});
 	}
 
 	public authPut(method:string, body:any):Observable<any>{
