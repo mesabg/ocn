@@ -2,10 +2,6 @@
  * Global imports
  */
 import { Injectable } from '@angular/core';
-import { 
-	CanActivate,
-	ActivatedRouteSnapshot, 
-	RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -18,9 +14,9 @@ import { AuthenticationService } from '../@services';
  * - This guard manages the authentication of a 'general' user type
  */
 @Injectable()
-export class GeneralGuard implements CanActivate {
+export class GeneralGuard {
 	constructor(private authentication:AuthenticationService){}
-
+/*
 	canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -38,5 +34,5 @@ export class GeneralGuard implements CanActivate {
 				reject(reason);
 			});
 		});	
-	}
+	}*/
 }
