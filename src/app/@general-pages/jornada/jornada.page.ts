@@ -60,17 +60,23 @@ export class JornadaPage implements OnInit, AfterViewInit {
 
   public async process(){
     try {
-        
+        alert("Antes de tomar la foto");
         let user = await this.authentication.getUser();
         let picture:File = await this.camera.takePicture();
+        alert("Photo is taken :: " + picture.name);
         let photoResponse = await this.userApi.postCameraPhoto(picture);
+        alert("API response :: " + JSON.stringify(photoResponse));
         if (photoResponse.state != "success") throw new Error("Photo is not save");
+        alert("Despues de tomar la foto");
     
         //-- Start process sending the coords
         let self = this;
+        alert("Antes de enviar las coordenadas");
         let resp = await self.geo.getCurrentPosition();
+        alert("Luego de enviar la coordenadas");
         let coordsResponse = await self.coordsApi.registerCoords(resp.coords.latitude, resp.coords.longitude);
         if (coordsResponse.state == "success"){
+          alert("Primera coordenada enviada correctamente");
           //-- Send coords programmed
           setInterval(async function(){
             try {
@@ -90,6 +96,7 @@ export class JornadaPage implements OnInit, AfterViewInit {
         this.navCtrl.popToRoot();
     } catch (reason) {
         console.log("An error ocurred :: ", reason);
+        alert("Error :: " + reason);
     }
   }
 
