@@ -40,10 +40,10 @@ export class CameraService {
         }else{
             //-- We are on a device
             console.log("We are on mobile");
-            alert("Mobile device");
+            //alert("Mobile device");
             try {
                 let base64Image:string = (await this.camera.getPicture(options));
-                alert("Image " + base64Image);
+                //alert("Image " + base64Image);
                 let byteCharacters = atob(base64Image);
                 let byteNumbers = new Array(byteCharacters.length);
                 for (let i = 0; i < byteCharacters.length; i++)
@@ -51,7 +51,7 @@ export class CameraService {
                 let byteArray = new Uint8Array(byteNumbers);
                 let blob = new Blob([byteArray], {type: 'image/jpg'});
                 let picture = new File([blob], "image.jpg");
-                alert("Image after process :: " + picture.size);
+                //alert("Image after process :: " + picture.size);
                 return picture;
             } catch (reason) {
                 console.log("An error ocurred while open camera");

@@ -141,7 +141,14 @@ export class ActiveTasksPage implements OnInit {
 		try {
 			let task = JSON.parse($('#detalle-tarea').attr('tarea'));
 			let response = await this.taskApi.endTask(task.id);
-			console.log("Status change :: ", response);
+			if (response.state != "success") throw new Error("Task not deleted");
+			let id = null;
+			this.tasks.forEach((task_, index) => {
+				if (task_.id == task.id) id = index;
+			});
+
+			if (id != null) this.tasks.splice(id, 1);
+			$('#detalle-tarea').hide();
 		} catch (reason) {
 			console.log("An error ocurred :: ", reason);
 		}

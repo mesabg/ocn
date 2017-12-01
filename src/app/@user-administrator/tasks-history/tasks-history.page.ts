@@ -143,14 +143,14 @@ export class TasksHistoryPage implements OnInit {
 		try {
 			let task = JSON.parse($('#detalle-tarea').attr('tarea'));
 			let response = await this.taskApi.openTask(task.id);
+			if (response.state != "success") throw new Error("Task not deleted");
+			let id = null;
+			this.tasks.forEach((task_, index) => {
+				if (task_.id == task.id) id = index;
+			});
 
-			let res = this.tasks.indexOf(task);
-			if (res == -1) {}
-			else this.tasks.splice(res, 1);
-
+			if (id != null) this.tasks.splice(id, 1);
 			$('#detalle-tarea').hide();
-
-			console.log("Status change :: ", response);
 		} catch (reason) {
 			console.log("An error ocurred :: ", reason);
 		}

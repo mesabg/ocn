@@ -1,63 +1,73 @@
 
 <div style="background-color: white;">
   
-  <div id="crear-tarea">
+  <div id="crear-tarea" class="outer-container bg-blue">
       <div class="container-box assing-no-limits">
           <label>Tareas activas:</label>
   
-          <div *ngFor="let task of tasks" class="header-sidebar">
+          <div *ngFor="let task of tasks" class="header-sidebar" to-left>
               <div style="padding-left: 15px; padding-right: 15px; width: 90vw;" class="bottom-border" (click)="desplegarTarea(task)">
                   <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ task.title }}</p>
                   <p style="margin-top: -16px;font-size: 13px;" class= "single-line-13">{{ task.description }} aruifhlwruihfilwurhfwilrufhlaiwrufhailwrufhawuilrhailughailsuaclurhcuwhrfguiochracuiorhguiarhgiuashroifguahsoruiaghsioghauiorghasiorughalsiurghasuioagosudfhasuiodfhasidufhasiodufhasdioufhaosid </p>
                   <hr>
-                  <p style="margin-top: -16px;font-size: 13px; text-align:right"> <i>Creada el: {{ task.created_at | date:'fullDate' }} </i> </p>
+                  <p style="margin-top: -16px;font-size: 13px; text-align:right; margin-right:10px;"> <i>Creada el: {{ task.created_at | date:'fullDate' }} </i> </p>
               </div>
           </div>
       </div>
-      <div class="botones-box">
+      <div class="botones-box" to-left>
           <input type="button" id="button-volver" class="button-doble back-button" value="VOLVER" (click)="volver()">
       </div>
   </div>
   
   <div id="detalle-tarea" class="background">
-      <div class="container-box">
-          <label style="min-height: 25px;">
-              <span style="text-align:left;">Detalle de la tarea:</span>    
-              <span class="x-button" (click)="cerrarDescripcion()">X</span>    
-          </label>
-          <div class="detalle-inner">
-              <p> <i>Título:</i> <br> <strong class="the-title"> data </strong> </p>
-              <div class="separator"></div>
-              <p style="text-align: justify;"> <i>Descripción:</i> <br><br> <span class="the-description"> data </span> </p>
-              <div class="separator"></div>
-              <p style="text-align: right;"> <i>Creada el: <span id="the-date"></span> </i> </p>
-          </div>
-      </div>
+    <div class="container-box">
+        <label style="min-height: 25px;">
+            <span style="text-align:left;">Detalle de la tarea:</span>    
+            <span class="x-button" (click)="cerrarDescripcion()">X</span>    
+        </label>
+        <div class="detalle-inner" to-left>
+            <p> <i>Título:</i> <br> <strong class="the-title"> data </strong> </p>
+            <div class="separator"></div>
+            <p style="text-align: justify;"> <i>Descripción:</i> <br><br> <span class="the-description"> data </span> </p>
+            <div class="separator"></div>
+            <p style="text-align: right;"> <i>Creada el: <span id="the-date"></span> </i> </p>
+        </div>
+    </div>
 
-      <div class="container-box assing-2">
-          <label>Comentarios: </label>
-          
-          <div *ngFor="let user of commented" class="header-sidebar">
-              <div class="imagen-sidebar">
-                  <img  [attr.src]="user.img">
-              </div>
-              
-              <div>
-                  <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ user.name }}</p>
-                  <p style="margin-top: -16px;font-size: 13px;">{{ user.comment }}</p>
-              </div>
-          </div>
-      </div>
+    <div class="container-box">
+        <label>Comentar:</label>
+        <textarea 
+            class="input-data" 
+            required 
+            id="descripcion_tarea" 
+            placeholder="Ejemplo comentario" 
+            [(ngModel)]="comentario"
+            onkeyup="textAreaAdjust(this)">
+        </textarea>
+    </div>
+    <div class="botones-box" to-left style="margin-bottom:5%;">
+        <input type="button" id="button-crear" class="button-doble success-botton" value="COMENTAR" (click)="crearComment()">
+    </div>
 
-      <div class="container-box">
-          <label>Comentar:</label>
-          <textarea class="input-data" required id="descripcion_tarea" placeholder="Ejemplo comentario" [(ngModel)]="comentario">
-          </textarea>
-      </div>
-      <div class="botones-box">
-          <input type="button" id="button-volver" class="button-doble back-button red-back" value="FINALIZAR TAREA" (click)="finalizarTarea()">
-          <input type="button" id="button-crear" class="button-doble success-botton" value="COMENTAR" (click)="crearComment()" style="float: right;">
-      </div>
-  </div>
+    <div class="container-box assing-2">
+        <label>Comentarios: </label>
+        
+        <div *ngFor="let user of commented" class="header-sidebar">
+            <div class="imagen-sidebar">
+                <img  [attr.src]="user.img">
+            </div>
+            
+            <div to-left>
+                <p style="margin-top: 18px; font-size: 18px;font-weight: bold;">{{ user.name }}</p>
+                <p style="margin-top: -16px;font-size: 13px;">{{ user.comment }}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="botones-box" to-left>
+        <input type="button" id="button-volver" class="button-doble back-button red-back" value="FINALIZAR TAREA" (click)="finalizarTarea()">
+    </div>
+</div>
   
 </div>
