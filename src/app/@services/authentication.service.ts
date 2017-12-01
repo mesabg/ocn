@@ -42,7 +42,9 @@ export class AuthenticationService {
     public async login(username:string, password:string):Promise<string>{
         try {
             //-- Manage API login
+            alert("Before Login");
             let response = await this.api.login(username, password).toPromise();
+            alert("After Login " + JSON.stringify(response));
             if (response.state != "success") throw new Error("Login failed");
             await this.storage.set('token', response.data.token);
             let user = await this.api.getUserData().toPromise();
@@ -60,7 +62,7 @@ export class AuthenticationService {
             return response.data.type; 
         } catch (reason) {
             console.log("An error ocurred :: ", reason);
-            alert("Error al iniciar sesión");
+            alert("Error al iniciar sesión " + reason);
             return "not-logged-in";
         }
     };

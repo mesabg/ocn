@@ -3,10 +3,11 @@
     <name>SGP</name>
     <description>SGP</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <allow-navigation href="*" />
     <content src="index.html" />
-    <content original-src="index.html" />
     <access origin="*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -20,7 +21,7 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="50" />
     <preference name="orientation" value="portrait" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -89,6 +90,5 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Location process" />
     </plugin>
     <plugin name="cordova-plugin-background-mode" spec="~0.7.2" />
-    <allow-navigation href="http://192.168.0.103:8100" />
     <plugin name="cordova-plugin-camera" spec="~2.4.1" />
 </widget>
