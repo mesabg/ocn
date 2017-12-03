@@ -2,7 +2,6 @@
  * Global imports
  */
 import { Injectable, EventEmitter } from '@angular/core';
-import { App } from 'ionic-angular';
 
 /**
  * Service description
@@ -16,7 +15,7 @@ export class CTAService {
 	public routeChange:EventEmitter<string> = new EventEmitter<string>();
 	public actualRoute:string;
 
-	constructor(private appCtrl:App) { }
+	constructor() { }
 
 	public login():void { /*this.appCtrl.getRootNav().setRoot('app-login-page'); this.appCtrl.getRootNav().push('app-login-page');*/ }
 	public register():void { /*this.appCtrl.getRootNav().setRoot('app-register-page'); this.appCtrl.getRootNav().push('app-register-page');*/ }

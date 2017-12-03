@@ -1,7 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import $ from 'jquery';
 
 @Injectable()
 export class CameraService {

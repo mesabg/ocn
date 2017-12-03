@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 
 //-- Local imports
 import { LoginModel } from '../../@model';
 import { AuthenticationService } from '../../@services';
-import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { CoordsApi, UserApi } from '../../@api';
 import $ from 'jquery';
@@ -26,13 +24,10 @@ export class LoginPage implements OnInit, AfterViewInit {
   constructor(
     private formBuilder:FormBuilder,
     private authentication:AuthenticationService,
-    private geo:Geolocation,
     private backgroundMode: BackgroundMode,
-    private coordsApi:CoordsApi,
     private userApi:UserApi,
     public navCtrl:NavController, 
-    public navParams:NavParams,
-    private camera: Camera) { }
+    public navParams:NavParams) { }
 
   async ngOnInit() { 
     this.createForm(); 

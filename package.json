@@ -9,7 +9,10 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "start": "ionic serve --lab -c -w chrome",
+    "browser": "ionic cordova run browser -lc",
+    "emulate": "ionic cordova run android -lc --emulator"
   },
   "dependencies": {
     "@angular/common": "5.0.1",
@@ -30,21 +33,22 @@
     "@ionic-native/status-bar": "4.4.0",
     "@ionic/storage": "^2.1.3",
     "angular2-jwt": "^0.2.3",
+    "cordova-browser": "5.0.1",
+    "cordova-plugin-background-mode": "~0.7.2",
+    "cordova-plugin-camera": "~2.4.1",
+    "cordova-plugin-device": "1.1.4",
+    "cordova-plugin-geolocation": "~3.0.0",
+    "cordova-plugin-ionic-webview": "^1.1.11",
+    "cordova-plugin-splashscreen": "~4.0.1",
+    "cordova-plugin-whitelist": "1.3.1",
+    "cordova-sqlite-storage": "~2.1.2",
     "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "~2.2.1",
     "ionicons": "3.0.0",
     "jquery": "^3.2.1",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18",
-    "ionic-plugin-keyboard": "~2.2.1",
-    "cordova-plugin-whitelist": "1.3.1",
-    "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-splashscreen": "~4.0.1",
-    "cordova-plugin-ionic-webview": "^1.1.11",
-    "cordova-sqlite-storage": "~2.1.2",
-    "cordova-plugin-geolocation": "~3.0.0",
-    "cordova-plugin-background-mode": "~0.7.2",
-    "cordova-plugin-camera": "~2.4.1"
+    "zone.js": "0.8.18"
   },
   "devDependencies": {
     "@angular/cli": "^1.5.2",
@@ -65,6 +69,9 @@
       },
       "cordova-plugin-background-mode": {},
       "cordova-plugin-camera": {}
-    }
+    },
+    "platforms": [
+      "browser"
+    ]
   }
 }

@@ -2,14 +2,13 @@
  * Global Imports
  */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 /**
  * Local Imports
  */
-import { CoordsModel, BackendModel } from '../@model';
+import { BackendModel } from '../@model';
 
 /**
  * API Import

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { 
     tokenNotExpired, 
-    JwtHelper } from 'angular2-jwt';
+    /*JwtHelper*/ } from 'angular2-jwt';
 
 /**
  * Local imports
@@ -23,7 +23,7 @@ export class AuthenticationService {
     /**
      * Variables
      */
-    private jwt:JwtHelper = new JwtHelper();
+    //private jwt:JwtHelper = new JwtHelper();
 
     constructor(
         private api:UserApi,
@@ -42,9 +42,9 @@ export class AuthenticationService {
     public async login(username:string, password:string):Promise<string>{
         try {
             //-- Manage API login
-            alert("Before Login");
+            console.log("Before Login");
             let response = await this.api.login(username, password).toPromise();
-            alert("After Login " + JSON.stringify(response));
+            console.log("After Login " + JSON.stringify(response));
             if (response.state != "success") throw new Error("Login failed");
             await this.storage.set('token', response.data.token);
             let user = await this.api.getUserData().toPromise();

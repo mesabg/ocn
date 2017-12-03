@@ -2,12 +2,10 @@
  * Global imports
  */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * Local imports
  */
-import { AuthenticationService } from '../@services';
 
 /**
  * Guard description
@@ -15,7 +13,7 @@ import { AuthenticationService } from '../@services';
  */
 @Injectable()
 export class AdministratorGuard {
-	constructor(private authentication:AuthenticationService){}
+	constructor(){}
 
 	/*canActivate(
 		next: ActivatedRouteSnapshot,
