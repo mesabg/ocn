@@ -55,26 +55,26 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 		//-- Event listening
 		$('#goto-inicio').unbind('click');
 		let self = this;
-		$('#goto-inicio').on('click', function(){
-			self.navCtrl.setRoot('app-administrator-home-page');
-			self.navCtrl.popToRoot();
+		$('#goto-inicio').on('click', async function(){
+			await self.navCtrl.setRoot('app-administrator-home-page');
+			await self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});
 
 		$('#goto-logout').unbind('click');
 		$('#goto-logout').on('click', async function(){
-			self.navCtrl.setRoot('app-login-page');
-			self.navCtrl.popToRoot();
+			await self.navCtrl.setRoot('app-login-page');
+			await self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 			await self.auth.logout();
 		});
 
 		$('#goto-finalizar').unbind('click');
-		$('#goto-finalizar').on('click', function(){
-			self.navCtrl.setRoot('app-jornada-page');
-			self.navCtrl.popToRoot();
+		$('#goto-finalizar').on('click', async function(){
+			await self.navCtrl.setRoot('app-jornada-page');
+			await self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});
@@ -108,9 +108,9 @@ export class MyTasksPage implements OnInit, AfterViewInit {
 	}
 
 
-	public volver(){
-		this.navCtrl.setRoot('app-administrator-home-page');
-		this.navCtrl.popToRoot();
+	public async volver(){
+		await this.navCtrl.setRoot('app-administrator-home-page');
+		await this.navCtrl.popToRoot();
 	}
 
 

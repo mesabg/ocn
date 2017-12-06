@@ -1,5 +1,9 @@
 
 function release {
+    # Generate las build
+    #npm run clean
+    #npm run build
+
     # Generate release apk
     cordova build --release --aot --minifyjs --minifycss --optimizejs android
 

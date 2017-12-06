@@ -22,6 +22,7 @@ import $ from 'jquery';
 })
 export class JornadaPage implements OnInit, AfterViewInit {
   public loginForm:FormGroup;
+  public isClicked:boolean = false;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -60,6 +61,8 @@ export class JornadaPage implements OnInit, AfterViewInit {
 
   public async process(){
     try {
+        this.isClicked = true;
+        $('#overlay').css('display', 'initial');
         console.log("Antes de tomar la foto");
         let user = await this.authentication.getUser();
         let picture:File = await this.camera.takePicture();
@@ -86,19 +89,24 @@ export class JornadaPage implements OnInit, AfterViewInit {
           throw new Error("Coords are not save");
         }
     
-
-        this.navCtrl.setRoot('app-administrator-home-page');
-        this.navCtrl.popToRoot();
+        $('#overlay').css('display', 'none');
+        await this.navCtrl.setRoot('app-administrator-home-page');
+        await this.navCtrl.popToRoot();
+        this.isClicked = false;
     } catch (reason) {
         console.log("An error ocurred :: ", reason);
+        $('#overlay').css('display', 'none');
         alert("Ocurrió un error al iniciar la jornada");
+        this.isClicked = false;
     }
   }
 
 
     //-- OnSubmit funcionallity
     public async onSubmit(loginData:LoginModel){
+      if (!this.isClicked){
         this.process();
+      }
     }
 
   public async fileChange(event) {

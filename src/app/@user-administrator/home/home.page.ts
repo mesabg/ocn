@@ -18,7 +18,9 @@ export class HomePage implements OnInit, AfterViewInit {
 	public isAdmin:Boolean = false;
 
   constructor(private auth:AuthenticationService, public navCtrl:NavController, public navParams:NavParams) { }
-	ngOnInit() { }
+	async ngOnInit() {
+		await this.navCtrl.setRoot('app-administrator-home-page');
+	}
 	ionViewDidLoad(){ }
 	ionViewWillLeave(){ }
 
@@ -37,8 +39,8 @@ export class HomePage implements OnInit, AfterViewInit {
 		
 		let self = this;
 		$('#goto-mis-tareas').unbind('click');
-		$('#goto-mis-tareas').on('click', function(){
-			self.navCtrl.push('app-administrator-my-tasks-page');
+		$('#goto-mis-tareas').on('click', async function(){
+			await self.navCtrl.push('app-administrator-my-tasks-page');
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});
@@ -46,17 +48,17 @@ export class HomePage implements OnInit, AfterViewInit {
 
 		$('#goto-logout').unbind('click');
 		$('#goto-logout').on('click', async function(){
-			self.navCtrl.setRoot('app-login-page');
-			self.navCtrl.popToRoot();
+			await self.navCtrl.setRoot('app-login-page');
+			await self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 			await self.auth.logout();
 		});
 
 		$('#goto-finalizar').unbind('click');
-		$('#goto-finalizar').on('click', function(){
-			self.navCtrl.setRoot('app-jornada-page');
-			self.navCtrl.popToRoot();
+		$('#goto-finalizar').on('click', async function(){
+			await self.navCtrl.setRoot('app-jornada-page');
+			await self.navCtrl.popToRoot();
 			document.getElementById("my-sidebar").style.display = "none";
 			document.getElementById("fondo-sidebar").style.display = "none";
 		});
@@ -64,19 +66,19 @@ export class HomePage implements OnInit, AfterViewInit {
 
 
 	//-- Change page actions
-	public addTask(){
-		this.navCtrl.push('app-administrator-add-task-page');
+	public async addTask(){
+		await this.navCtrl.push('app-administrator-add-task-page');
 	}
 
-	public myTasks(){
-		this.navCtrl.push('app-administrator-my-tasks-page');
+	public async myTasks(){
+		await this.navCtrl.push('app-administrator-my-tasks-page');
 	}
 
-	public activeTask(){
-		this.navCtrl.push('app-administrator-active-tasks-page');
+	public async activeTask(){
+		await this.navCtrl.push('app-administrator-active-tasks-page');
 	}
 
-	public tasksHistory(){
-		this.navCtrl.push('app-administrator-tasks-history-page');
+	public async tasksHistory(){
+		await this.navCtrl.push('app-administrator-tasks-history-page');
 	}
 }
