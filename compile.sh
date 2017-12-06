@@ -25,4 +25,4 @@ apk=apk
 
 
 # run build
-release SGP_sdk23
+release SGP_sdk21
