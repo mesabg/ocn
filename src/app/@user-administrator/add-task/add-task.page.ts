@@ -38,6 +38,8 @@ export class AddTaskPage implements OnInit {
 		$('#page-title').text('Agregar Tarea');
 
 		try {
+			console.log("In here my friend");
+
 			//-- Load User "Refresh save"
 			let user = await this.auth.getUser();
 			$('#user-image').attr('src', user.photo);
@@ -59,12 +61,11 @@ export class AddTaskPage implements OnInit {
 			});
 
 			//-- Add myself to the list
-			let myself = await this.auth.getUser();
 			this.testArray.push({
-				id: myself.id,
-				img: myself.photo,
-				name: `${myself.name} (Yo)`,
-				email: myself.email
+				id: user.id,
+				img: user.photo,
+				name: `${user.name} (Yo)`,
+				email: user.email
 			});
 
 		} catch (reason) {

@@ -19,7 +19,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
   constructor(private auth:AuthenticationService, public navCtrl:NavController, public navParams:NavParams) { }
 	async ngOnInit() {
-		await this.navCtrl.setRoot('app-administrator-home-page');
+		console.log("Loading home page..");
 	}
 	ionViewDidLoad(){ }
 	ionViewWillLeave(){ }
